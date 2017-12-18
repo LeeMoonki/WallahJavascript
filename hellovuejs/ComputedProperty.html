@@ -19,6 +19,7 @@
 	</div>
 	<div id="compareExComputed">
 		<p>Computed : {{ fullName }}</p>
+		<p>Computed with Setter : {{ fullNameWithSetter }}</p>
 	</div>
 	<hr />
 
@@ -71,8 +72,23 @@
 				lastName: 'Moonki'
 			},
 			computed: {
+				// getter
 				fullName: function () {
 					return this.firstName + ' ' + this.lastName;
+				},
+				fullNameWithSetter: {
+					// fullName의 경우 기본제공되는 getter를 사용
+					// setter를 두지 않으면 fullName 에 값을 할당하는 것은 에러를 발생시킨다
+					// 따라서 값을 할당하고자 하면 setter를 만들어야 한다
+					//getter
+					get: function () {
+						return this.firstName + ' ' + this.lastName;
+					},
+					set: function (val) {
+						var names = val.split(' ');
+						this.firstName = names[0];
+						this.lastName = names[names.length - 1];
+					}
 				}
 			}
 		});
