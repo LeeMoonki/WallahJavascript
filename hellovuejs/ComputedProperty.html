@@ -1,0 +1,85 @@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ComputedProperty</title>
+	<script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="example">
+		<p>원본 메세지 : "{{ message }}"</p>
+		<p>뒤집히도록 계산된 메세지 : "{{ reversedMessage }}"</p>
+		<p>뒤집히도록 계산된 메세지 메소드 : "{{ reversedMessageF() }}"</p>
+	</div>
+	<hr />
+	<div id="compareExWatch">
+		<p>Watch : {{ fullName }}</p>
+	</div>
+	<div id="compareExComputed">
+		<p>Computed : {{ fullName }}</p>
+	</div>
+	<hr />
+
+	<script type="text/javascript">
+
+		// method는 호출할 때 마다 항상 안의 내용을 실행하지만
+		// computed property(여기에서는 reversedMessage)는 종속되어있는
+		// 데이터 중 일부가 변경된 경우에만 다시 실행된다. (캐싱)
+		var vm = new Vue({
+			el: '#example',
+			data: {
+				message: '안녕하세요'
+			},
+			computed: {
+				// 계산된 getter
+				reversedMessage: function () {
+					// 'this' 는 vm 인스턴스를 가리킵니다.
+					return this.message.split('').reverse().join('');
+				}
+			},
+			methods: {
+				reversedMessageF: function () {
+					return this.message.split('').reverse().join('');
+				}
+			}
+		});
+
+		// Computed Property versus Watched Property
+		var watch = new Vue({
+			el: '#compareExWatch',
+			data: {
+				firstName: 'Lee',
+				lastName: 'Moonki',
+				fullName: 'Lee Moonki'
+			},
+			watch: {
+				firstName: function (val) {
+					this.fullName = val + ' ' + this.lastName;
+				},
+				lastName: function (val) {
+					this.fullName = this.firstName + ' ' + val;
+				}
+			}
+		});
+
+		var compute = new Vue({
+			el: '#compareExComputed',
+			data: {
+				firstName: 'Lee',
+				lastName: 'Moonki'
+			},
+			computed: {
+				fullName: function () {
+					return this.firstName + ' ' + this.lastName;
+				}
+			}
+		});
+	</script>
+</body>
+</html>
