@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ClassStyleBinding</title>
+	<script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<!-- To toggle the class dynamically, we can send an object to v-bind:class -->
+	<!-- The existence of class 'active' is decided by true property of 'isActive' -->
+	<div id="classEx">
+		<div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">A</div>
+		<div v-bind:class="classObject">B</div>
+	</div>
+	<div id="classEx1">
+		<div v-bind:class="classObject">C</div>
+		<div v-bind:class="[activeClass1, errorClass1]">D</div>
+		<div v-bind:class="[isActive ? activeClass2 : '', errorClass2]">E</div>
+		<div v-bind:class="[{ active3: isActive }, errorClass3]">F</div>
+	</div>
+	<div id="styleEx">
+		<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">G</div>
+		<div v-bind:style="styleObject">H</div>
+	</div>
+
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#classEx',
+			data: {
+				isActive: true,
+				hasError: false,
+				classObject: {
+					active: true,
+					'text-danger': false // classObject['text-danger'] = true 로 접근
+				}
+			}
+		});
+
+		var vm1 = new Vue({
+			el: '#classEx1',
+			data: {
+				isActive: true,
+				error: null,
+				activeClass1: 'active1',
+				errorClass1: 'text-danger1',
+				activeClass2: 'active2',
+				errorClass2: 'text-danger2',
+				errorClass3: 'text-danger3'
+			},
+			computed: {
+				classObject: function () {
+					return {
+						active: this.isActive && !this.error,
+						'text-danger': this.error && this.error.type === 'fatal'
+					}
+				}
+			}
+		});
+
+		var vm2 = new Vue({
+			el: '#styleEx',
+			data: {
+				activeColor: '#f00',
+				fontSize: 30,
+				styleObject: {
+					margin: '20px 50px',
+					'padding-left': '30px'
+				}
+			}
+		});
+	</script>
+</body>
+</html>
