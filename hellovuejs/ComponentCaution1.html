@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>06-02</title>
+        <script src="../Vue2x/vue.js"></script>
+    </head>
+    <script type="text/x-template" id=selectTemplate>
+        <select>
+            <option-component></option-component>
+            <option-component></option-component>
+        </select>
+    </script>
+    <body>
+        <div id="example">
+            <select>
+                <!-- <select> 태그 안에서 <option-component> 라는 태그를 사용할 수 있다는 것이 브라우저에 등록되지 않았다. -->
+                <!-- 브라우저는 이 태그들을 구문 분석하는 작업을 먼저 수행한 후 Vue 컴포넌트를 렌더링한다. -->
+                <!-- 구문 분석 단계에서 DOM 요소가 올바르지 않다고 판단하기 때문에 제대로 렌더링하지 못한다. -->
+                <option-component></option-component>
+                <option-component></option-component>
+            </select>
+            <select>
+                <!-- 제대로 렌더링하지 못하는 문제에 대해 다음과 같이 is attribute 를 추가해서 해결한다 -->
+                <option is="option-component"></option>
+                <option is="option-component"></option>
+            </select>
+            <!-- <select> <option-component> 와 같은 코드가 <script type="text/x-template"> 태그 안에서 사용되거나 -->
+            <!-- .vue 확장자를 사용하는 단일 파일 컴포넌트 (Single File Component) 를 작성하는 경우에는 굳이 is attribute 를 사용하지 않아도 된다 -->
+            <select-component></select-component>
+        </div>
+    </body>
+    <script type="text/javascript">
+        Vue.component("option-component", {
+            template: "<option>Hi Vue.js</option>"
+        });
+
+        Vue.component("select-component", {
+            template: "#selectTemplate"
+        });
+
+        // vue component 를 적용시킬 때는 해당 컴포넌트를 사용하는 태그를 혹은 감싸는 태그를 vue 인스턴스에 바인딩해야 한다
+        var vm = new Vue({
+            el: "#example"
+        });
+    </script>
+</html>
