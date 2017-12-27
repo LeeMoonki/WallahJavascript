@@ -5,17 +5,12 @@
         <title>06-04</title>
         <script src="../../Vue2x/vue.js"></script>
     </head>
-    <body>
-        <div id="app">
-            <time-component></time-component>
+    <template id="timeTemplate">
+        <div>
+            <span>{{ nowTS }}</span>
+            <button v-on:click="timeClick">현재 시간</button>
         </div>
-        <template id="timeTemplate">
-            <div>
-                <span>{{ nowTS }}</span>
-                <button v-on:click="timeClick">현재 시간</button>
-            </div>
-        </template>
-    </body>
+    </template>
     <script type="text/javascript">
         Vue.component("time-component", {
             template: "#timeTemplate",
@@ -28,7 +23,14 @@
                 }
             }
         });
-
+    </script>
+    <body>
+        <div id="app">
+            <time-component></time-component>
+            <time-component></time-component>
+        </div>
+    </body>
+    <script type="text/javascript">
         var vm = new Vue({
             el: "#app"
         });
