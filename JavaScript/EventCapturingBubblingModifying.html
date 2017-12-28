@@ -1,0 +1,60 @@
+<!-- 이벤트 전달 경로 중 DOM이 수정되어도 이벤트 핸들러 호출에는 변경이 없다 -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            div {border:1px solid black}
+            .divOutside {width:200px;height:200px;background-color:lightgreen}
+            .divMiddle {width:150px;height:150px;background-color:lightblue}
+            .divInside {width:100px;height:100px;background-color:pink;position:relative}
+            .divFloat {position:absolute;left:210px;height:50px;width:50px;background-color:lightgray}
+            .highlight {background-color:black;}
+        </style>
+    </head>
+    <body>
+        <div id="divCapturingOutside" class="divOutside">
+            <div id="divCapturingMiddle" class="divMiddle">
+                <div id="divCapturingInside" class="divInside">
+                    Delete from propagation path
+                    <div id="divCapturingFloat" class="divFloat"></div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            (function () {
+                document.getElementById("divCapturingOutside")
+                    .addEventListener("click", function (e) {
+                    this.classList.toggle("highlight");
+                    alert("Outside Capturing");
+                    this.classList.toggle("highlight");
+                }, true);
+
+                document.getElementById("divCapturingMiddle")
+                    .addEventListener("click", function (e) {
+                    this.classList.toggle("highlight");
+                    document.getElementById("divCapturingInside")
+                        .removeChild(document.getElementById("divCapturingFloat"));
+                    alert("Middle Capturing, deleting divCapturingFloat");
+                    this.classList.toggle("highlight");
+                }, true);
+
+                document.getElementById("divCapturingInside")
+                    .addEventListener("click", function (e) {
+                    this.classList.toggle("highlight");
+                    alert("Inside Capturing");
+                    this.classList.toggle("highlight");
+                }, true);
+
+                document.getElementById("divCapturingFloat")
+                    .addEventListener("click", function (e) {
+                    this.classList.toggle("highlight");
+                    alert("Float Capturing");
+                    this.classList.toggle("highlight");
+                }, true);
+
+            }());
+        </script>
+    </body>
+</html>
