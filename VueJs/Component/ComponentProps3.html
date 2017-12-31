@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>06-07</title>
+        <script src="../../Vue2x/vue.js"></script>
+    </head>
+    <template id="listTemplate">
+        <div>
+            <table>
+            <thead id="list">
+                <tr>
+                    <th>번호</th><th>이름</th><th>전화번호</th><th>주소</th>
+                </tr>
+            </thead>
+            <tbody id="contacts">
+                <tr v-for="contact in contacts">
+                    <td>{{ contact.no }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.tel }}</td>
+                    <td>{{ contact.address }}</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </template>
+    <script type="text/javascript">
+        Vue.component("contactlist-component", {
+            template: "#listTemplate",
+            props: ["contacts"]
+        });
+    </script>
+    <body>
+        <div id="app">
+            <h1>예방 접종</h1>
+            <hr>
+            <h3>1차 대상자 : 5월 1~3일</h3>
+            <contactlist-component :contacts="list1"></contactlist-component>
+            <h3>2차 대상자 : 5월 13~15일</h3>
+            <contactlist-component :contacts="list2"></contactlist-component>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                list1: [
+                    { no: 97, name: "AA", tel: "010-1234-5678", address: "aa" },
+                    { no: 96, name: "BB", tel: "010-9012-3456", address: "bb" },
+                    { no: 95, name: "CC", tel: "010-7890-1234", address: "cc" }
+                ],
+                list2: [
+                    { no: 82, name: "DD", tel: "010-3456-7890", address: "dd" },
+                    { no: 81, name: "EE", tel: "010-2345-6789", address: "ee" },
+                    { no: 80, name: "FF", tel: "010-6789-0123", address: "ff" }
+                ]
+            }
+        });
+    </script>
+</html>

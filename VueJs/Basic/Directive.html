@@ -31,6 +31,9 @@
         <input type="text" v-model="vAmount" />
         <div class="greenBox" v-if="vAmount > 100"></div>
         <div class="grayBox" v-show="vAmount > 100"></div>
+        <br /><br />
+        <div v-text="alphabet"></div>
+        <div v-text="alphabet.a"></div>
     </div>
 </body>
 <script type="text/javascript">
@@ -42,7 +45,12 @@
         modelMsg: "first Vue",
         vTrue: true,
         vFalse: false,
-        vAmount: 0
+        vAmount: 0,
+        alphabet: {
+            a: "A",
+            b: "B",
+            c: "C"
+        }
     };
 
     // 단방향 디렉티브는 HTML 요소에서 값을 변경하더라도 모델의 값은 변하지 않는다.
