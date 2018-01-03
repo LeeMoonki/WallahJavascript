@@ -1,0 +1,94 @@
+<!--
+    부모-자식 관계의 컴포넌트가 아닌 경우 컴포넌트끼리 정보를 주고 받기 위해서
+    이벤트 버스(Event Bus)를 사용한다.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>06-10</title>
+        <script src="../../Vue2x/vue.js"></script>
+    </head>
+    <!-- Event Bus 객체 -->
+    <script type="text/javascript">
+        var eventBus = new Vue();
+    </script>
+    <!-- // Event Bus 객체 -->
+    <!-- First Child Component -->
+    <template id="child1Template">
+        <div>
+            <button v-on:click="clickEvent">child1 button</button>
+            <div>{{ currentTime }}</div>
+        </div>
+    </template>
+    <script type="text/javascript">
+        Vue.component("child1-component", {
+            template: "#child1Template",
+            data: function () {
+                return { currentTime: "" };
+            },
+            methods: {
+                clickEvent: function (e) {
+                    // child1-component의 버튼을 클릭하면 clickEvent 메서드가 호출되면서
+                    // 이벤트 버스 객체의 $emit 메서드를 이용해 이벤트를 발신한다.
+
+                    // 이를 위해서는 미리 이벤트가 바인딩되어야 하는데, 
+                    // child2-component의 created 이벤트 훅에서 $on 메서드를 이용해
+                    // 이벤트 수신을 위한 바인딩을 수행한다.
+
+                    var d = new Date()
+                        , t = d.toLocaleTimeString() + " " + d.getMilliseconds() + "ms";
+                    
+                    // 이벤트를 발신하는 컴포넌트에서는 $emit 메서드를 호출한다.
+                    eventBus.$emit("click1", t);
+                    this.currentTime = t;
+                }
+            }
+        });
+    </script>
+    <!-- // First Child Component -->
+    <!-- Second Child Component -->
+    <template id="child2Template">
+        <ul>
+            <li v-for="t in timelist">{{ t }}</li>
+        </ul>
+    </template>
+    <script type="text/javascript">
+        Vue.component("child2-component",{
+            template: "#child2Template",
+            data: function () {
+                return {
+                    timelist: []
+                };
+            },
+            created: function () {
+                // 이벤트를 수신하는 컴포넌트는 미리 이벤트 핸들러를 등록해두어야 한다.
+                // 이를 위해서 Vue 인스턴스 생명주기의 created 이벤트 훅을 이용하여
+                // Vue 인스턴스가 만들어질 때 $on 메서드를 사용해 이벤트 수신 정보를
+                // 등록해둔다.
+                eventBus.$on("click1", this.child1Click);
+
+                // click1 이벤트가 수신되면 child1Click 메서드가 호출되면서
+                // 시간 정보를 인자로 전달받아 로컬 상태인 timelist 데이터 옵션에 추가한다.
+            },
+            methods: {
+                child1Click: function (time) {
+                    this.timelist.push(time);
+                }
+            }
+        });
+    </script>
+    <!-- // Second Child Component -->
+    <body>
+        <div id="app">
+            <child1-component></child1-component>
+            <hr>
+            <child2-component></child2-component>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#app"
+        });
+    </script>
+</html>

@@ -18,6 +18,9 @@ function filter(list, predicate) {
     return new_list;
 }
 
+// list는 열거형 데이터
+// iteratee는 열거형 데이터의 한 행(row)에서 새로운 배열로 매핑(map)할 데이터를 선택하는 함수
+// iteratee는 열거형 데이터를 한 줄 한 줄 이동하며 데이터를 선택해온다. (반복자)
 function map(list, iteratee) {
     var new_list = [];
     for (var i = 0, len = list.length; i < len; i++) {

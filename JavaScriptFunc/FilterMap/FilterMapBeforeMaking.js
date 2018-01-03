@@ -33,3 +33,11 @@ for (var i = 0, len = temp_users.length; i < len; i++) {
     names.push(temp_users[i].name);
 }
 console.log(names);
+
+// 위 과정들의 리팩터링 대상은 바로 '중복'이다.
+// temp_users에 값을 담는 부분에서 중복되는 for와 if문을 리팩터링한다.
+// for -> filter, if -> predicate
+
+// ages와 names에 값을 담는 과정도 리팩터링이 가능하다.
+// 어떤 배열 내부 객체의 특정 key를 갖는 값들만 담으므로
+// 배열.키 -> map
