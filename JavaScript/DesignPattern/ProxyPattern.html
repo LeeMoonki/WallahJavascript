@@ -1,0 +1,98 @@
+<!-- 일반적으로 proxy란, 클라이언트와 서버 연동에서 클라이언트가 바로
+    서버에 접근하는 것이 아니라 proxy를 통해서 간접적으로 접근할 수 있게 해준다.
+    이렇게 중간자 역할을 하는 proxy의 대표적인 역할은 클라이언트가 서버에 직접 접근하지 
+    못하도록, 한 단계 가상화 또는 캡슐화하는 기능이다. 이로써 서버의 기능들이 클라이언트에
+    직접 노출되지 않게 한다. -->
+
+<!-- 아래는 proxy pattern 과 delegation pattern 의 조합이다 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Delegation Pattern</title>
+
+        <style>
+            span {border:1px solid black}
+        </style>
+    </head>
+    <body>
+        <div id="tableWrapper">
+            <div id="row0">
+                <span id="cell00">0,0</span>
+                <span id="cell01">0,1</span>
+                <span id="cell02">0,2</span>
+                <span id="cell03">0,3</span>
+                <span id="cell04">0,4</span>
+                <span id="cell05">0,5</span>
+                <span id="cell06">0,6</span>
+                <span id="cell07">0,7</span>
+                <span id="cell08">0,8</span>
+                <span id="cell09">0,9</span>
+            </div>
+            <div id="row1">
+                <span id="cell10">1,0</span>
+                <span id="cell11">1,1</span>
+                <span id="cell12">1,2</span>
+                <span id="cell13">1,3</span>
+                <span id="cell14">1,4</span>
+                <span id="cell15">1,5</span>
+                <span id="cell16">1,6</span>
+                <span id="cell17">1,7</span>
+                <span id="cell18">1,8</span>
+                <span id="cell19">1,9</span>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        (function () {
+            var wrapper = document.getElementById("tableWrapper"), target
+                , proxyMouseOverEventHandler = {
+                    "cell05": function () {
+                        this.style.backgroundColor = "#000";
+                    },
+                    "cell15": function () {
+                        this.style.backgroundColor = "#000";
+                    },
+                    "default": function () {
+                        this.style.backgroundColor = "#90ee90";
+                    }
+                };
+
+            // 위 처럼 proxy를 만들면 mouseover 이벤트들을 모두 살펴보며 이벤트를 수정 및 생성, 삭제 하는 것이 아니라
+            // mouseover 만을 담당하는 로직이 포함된 proxy, proxy 변수만 살펴보면 
+            // 모든 mouseover 이벤트에 관련된 수정 등이 가능하다. 
+            wrapper.addEventListener("mouseover", function (e) {
+                target = e.target || e.srcElement;
+                if (target.id && target.id.indexOf("cell") > -1) {
+
+                    // if (target.id === "cell05" || target.id === "cell15"){
+                    //     target.style.backgroundColor = "#000";
+                    // } else {
+                    //     target.style.backgroundColor = "#90ee90";
+                    // }
+
+                    if (proxyMouseOverEventHandler.hasOwnProperty(target.id)) {
+                        proxyMouseOverEventHandler[target.id].call(target);
+                    } else {
+                        proxyMouseOverEventHandler["default"].call(target);
+                    }
+                }
+                e.stopPropagation();
+            }, true);
+
+            wrapper.addEventListener("mouseout", function (e) {
+                target = e.target;
+                if (target.id && target.id.indexOf("cell") > -1) {
+                    target.style.backgroundColor = "#FFF";
+                }
+            }, true);
+
+            wrapper.addEventListener("click", function (e) {
+                target = e.target;
+                if (target.id && target.id.indexOf("cell") > -1) {
+                    alert(target.innerHTML);
+                }
+            }, true);
+        }());
+    </script>
+</html>

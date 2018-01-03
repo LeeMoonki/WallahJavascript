@@ -1,0 +1,84 @@
+<!-- proxy를 통해 한꺼번에 요청 보내기 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Delegation Pattern</title>
+
+        <style>
+            #chatLog {border:1px solid black;width:200px;height:200px;overflow-y:scroll}
+        </style>
+    </head>
+    <body>
+        <div id="charLog"></div>
+        <form id="formChat">
+            <input type="text" id="inputChat">
+            <input type="submit" value="send">
+        </form>
+    </body>
+    <script type="text/javascript">
+        (function () {
+            // 채팅 프로그램은 대화가 수시로 송수신되어야 하므로 XMLHttpRequest가 수시로 일어난다.
+            // 이 때 서버 관점에서 너무 많은 요청 대문에 과부하가 걸리기 쉽다.
+            // 따라서 아래 예에서는 웹페이지 하나당 동시에 하나의 XMLHttpRequest만 
+            // 사용할 수 있도록 구현했다.
+
+            // proxy에서는 요청이 들어오면, 먼저 이전 XMLHttpRequest가 요청 중인지 isPending
+            // 변수로 판단한다. 만약 요청 중이면 임시로 requestChat 배열에 순서대로 채팅 내용을 쌓아둔다.
+            // 그리고 이전 XMLHttpRequest가 끝나면 바로 이어서 requestChat 배열에 쌓아두었던 채팅
+            // 내용을 한꺼번에 서버로 전달한다.
+
+            var divChatLog = document.getElementById("chatLog")
+                , formChat = document.getElementById("formChat")
+                , inputChat = document.getElementById("inputChat")
+                , isPending = false
+                , requestChat = [];
+            
+            function proxySendChat (chat) {
+                if (isPending === true) {
+                    requestChat.push(chat);
+                } else {
+                    sendCahtRequest([chat]);
+                }
+            }
+
+            formChat.addeventListener("submit", function () {
+                proxySendChat(inputChat.value);
+                inputChat.value = "";
+
+                event.returnValue = false;
+                return false;
+            });
+
+            function sendChatRequest (chats) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "./send_chat.php", true); // send_chat.php 가 채팅 서버의 요청 페이지라고 가정
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                isPending = true;
+
+                xhr.onload = function () {
+                    var pChat = document.createElement("p");
+                    pChat.innerHTML = xhr.responseText;
+                    divChatLog.appendChild(pChat);
+
+                    if (requestChat.length > 0) {
+                        sendChatRequest(requestChat);
+                        requestChat = [];
+                    } else {
+                        isPending = false;
+                    }
+                };
+
+                xhr.send("chats=" + encodeURIComponent(JSON.stringify(chats)));
+            }
+        }());
+
+        // 여러 개의 요청을 하나로 합쳐서 보내는 것은 채팅뿐만 아니라,
+        // <input> 태그에 대한 자동 완성 등과 같이 서버 요청이 연속해서 빠르게 발생하는 이벤트에
+        // 적용하면 서버에 대한 과부하를 줄일 수 있다.
+
+        // 이처럼 proxy pattern 은 클라이언트와 서버, 양쪽 상황에 따라 중간에서 흐름을 제어할
+        // 수 있는 기능으로 활용되기도 한다.
+    </script>
+</html>
