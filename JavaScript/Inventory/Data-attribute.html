@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Data-* attribute</title>
+    </head>
+    <body>
+        <div id="testDiv"
+             data-hello="Hello"
+             data-nice-to=" Nice To"
+             data-meet-you=" Meet You!">테스트 div</div>
+    </body>
+    <script type="text/javascript">
+        // https://developer.mozilla.org/ko/docs/Web/HTML/Global_attributes/data-*
+        // Note that the 'HTMLElement.dataset' property is a 'DOMStringMap',
+        // and the name of the custom data attribute data-test-value will be accessible
+        // via 'HTMLElement.dataset.testValue' (or 'HTMLElement.dataset["testValue"])
+        // as any dash(U+002D ; -) is replaced by the capitalization of the next letter,
+        // converting the name to camelcase.
+
+        var div = document.getElementById("testDiv")
+            , str = "";
+        
+        str += div.dataset.hello;
+        str += div.dataset.niceTo;
+        str += div.dataset.meetYou;
+
+        alert(str);
+    </script>
+</html>

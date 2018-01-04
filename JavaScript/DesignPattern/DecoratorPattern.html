@@ -1,0 +1,114 @@
+<!--
+    proxy 패턴은 호출되는 객체가 아닌 별도의 중간자 역할을 수행하는 proxy 객체가
+    추가 기능을 수행하는 패턴이라고 한다면, decorator 패턴은 호출 대상이 되는
+    객체에 추가 기능들을 자유롭게 추가하는 패턴이다.
+    proxy 패턴과 차이는 추가 기능을 어떠한 객체가 수행하는지에 따라 다르다.
+
+    decorator 패턴을 유용하게 이용할 수 있는 곳은 검증 도구 이다.
+    예를 들어, 인적 사항을 입력하는 양식들은 일반적으로 입력값마다 검증하는 로직이 필요하다.
+    이 때 각각의 입력값을 검증하는 방법이 다르므로 많은 웹페이지는 form을 submit하는
+    이벤트에서 일일이 검증하는 경우가 많다.
+
+    이럴 때 decorator 패턴을 이용하면 웹페이지마다 일일이 코딩하는 것이 아니라
+    검증 도구를 모듈화해서 사용할 수 있다.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Decorator Pattern</title>
+    </head>
+    <body>
+        <form id="personalInformation">
+            <label>First name : <input type="text" class="validate"
+                                       data-validate-rules="required alphabet" name="firstName"></label>
+            <br>
+            <label>Last name : <input type="text" class="validate"
+                                      data-validate-rules="required alphabet" name="lastName"></label>
+            <br>
+            <label>Age : <input type="text" class="validate"
+                                data-validate-rules="number" name="age"></label>
+            <br>
+            <label>Gender : <select class="validate" data-validate-rules="required">
+                <option>Male</option>
+                <option>Female</option>
+            </select></label>
+            <br>
+            <input type="submit">
+        </form>
+    </body>
+    <script type="text/javascript">
+        (function () {
+            var formPersonalInformation = document.getElementById("personalInformation")
+                , validator = new Validator(formPersonalInformation);
+            
+            function Validator (form) {
+                this.validatingForm = form;
+                form.addEventListener("submit", function () {
+                    if (!validator.validate(this)) {
+                        event.preventDefault();
+                        event.returnValue = false;
+                        return false;
+                    }
+                    alert("Success to validate");
+                    return true;
+                });
+            }
+
+            Validator.prototype.ruleSet = {};
+            Validator.prototype.decorate = function (ruleName, ruleFunction) {
+                this.ruleSet[ruleName] = ruleFunction;
+            };
+            Validator.prototype.validate = function (form) {
+                var validatingForm = form || this.validatingForm
+                    , inputs = validatingForm.getElementByClassName("validate")
+                    , length = inputs.length
+                    , i, j
+                    , input
+                    , checkRules
+                    , rule
+                    , ruleLength;
+
+                for (i = 0; i < length; i++) {
+                    input = inputs[i];
+                    if (input.dataset.validateRules) {
+                        checkRules = input.dataset.validateRules.split(" ");
+                        ruleLength = checkRules.length;
+                        for (j = 0; j < ruleLength; j++) {
+                            rule = checkRules[j];
+                            if (this.ruleSet.hasOwnProperty(rule)) {
+                                if (!this.ruleSet[rule].call(null, input)) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            validator.decorate("required", function (input) {
+                if (!input.value) {
+                    alert(input.name + " is required");
+                    return false;
+                }
+                return true;
+            });
+            validator.decorate("alphabet", function (input) {
+                var regex = /^[a-zA-Z\s]*$/;
+                if (!regex.test(input.value)) {
+                    alert(input.name + " has to be only alphabets");
+                    return false;
+                }
+                return true;
+            });
+            validator.decorate("number", function (input) {
+                var regex = /^[0-9]*$/;
+                if (!regex.test(input.value)) {
+                    alert(input.name + " has to be only numbers");
+                    return false;
+                }
+                return true;
+            });
+        }());
+    </script>
+</html>
