@@ -32,6 +32,12 @@
 
         console.log("Wrapper function is called with arguments");
         console.log(arguments);
+
+        // 이 예에서는 로그를 찍고 기존 함수를 그대로 호출하지만,
+        // 응용할 때는 wrapper 함수 안에서
+        // 즉, 이 위치에서 현재 입력으로 들어오는 인자들의 조건에 따라서 
+        // 기존 함수 호출 여부를 결정하면 된다.
+
         func.apply(this, Array.prototype.slice.call(arguments, 1));
         // Array.prototype.slice([1, 2, 3], 1) -> []
         // Array.prototype.slice.call([1, 2, 3], 1) -> [2, 3]
