@@ -1,4 +1,10 @@
 (function () {
+    // wrap 은 wrapper를 통해 func을 실행하게 함으로써
+    // 먼저 wrapper가 실행되고 (proxy역할)
+    // 그 다음에 wrap된 func을 실행하도록 하는 것이다.
+
+    // 첫 번째 인자는 기존 함수이고
+    // 두 번째 인자는 기존 함수를 호출하기 전에 먼저 호출할 wrapper 함수이다.
     function wrap (func, wrapper) {
         return function () {
             var args = [func].concat(Array.prototype.slice.call(arguments));
@@ -34,14 +40,20 @@
     // 위의 var rwappedFunction = wrap(...)... 는 다음과 같다
     // var wrappedFunction = function () {
     //     var args = [existingFunction].concat(Array.prototype.slice.call(arguments));
-
+    //
     //     console.log("wrap's args : ");
     //     console.log(args);
-
+    //
     //     return (function (args) {
+    //         // wrapper 함수
+    //
     //         console.log("Wrapper function is called with arguments");
     //         console.log(arguments);
+    //
+    //         // 기존 함수
     //         existingFunction.apply(this, Array.prototype.slice.call(arguments, 1));
+    //
+    //         // 결과적으로 wrapper를 먼저 실행하고 기존함수를 실행한다.
     //     });
     // }
 
@@ -50,4 +62,28 @@
 
     console.log("\n2. Calling wrapped function");
     wrappedFunction("First argument", "Second argument", "Third argument");
+
+    // Result : 
+
+    // 1. Calling existing function
+    // Existring function is called with arguments
+    // { '0': 'First argument',
+    // '1': 'Second argument',
+    // '2': 'Third argument' }
+
+    // 2. Calling wrapped function
+    // wrap's args :
+    // [ [Function: existingFunction],
+    // 'First argument',
+    // 'Second argument',
+    // 'Third argument' ]
+    // Wrapper function is called with arguments
+    // { '0': [Function: existingFunction],
+    // '1': 'First argument',
+    // '2': 'Second argument',
+    // '3': 'Third argument' }
+    // Existring function is called with arguments
+    // { '0': 'First argument',
+    // '1': 'Second argument',
+    // '2': 'Third argument' }
 }());
