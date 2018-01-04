@@ -41,7 +41,7 @@
         (function () {
             var formPersonalInformation = document.getElementById("personalInformation")
                 , validator = new Validator(formPersonalInformation);
-            
+            console.log(validator);
             function Validator (form) {
                 this.validatingForm = form;
                 form.addEventListener("submit", function () {
