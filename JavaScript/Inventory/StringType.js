@@ -1,4 +1,5 @@
-// 
+// string과 달리 String은 protortype에 메서드를 추가할 수 있고
+// 이 메서드를 string type의 값에서 직접 불러 사용할 수 있다
 
 
 var constructString = new String("wallah");
