@@ -38,6 +38,12 @@
         </form>
     </body>
     <script type="text/javascript">
+        // decorator 패턴을 이용해서 검증 모듈을 만들어두면
+        // 입력 양식이 여러 종류가 있는 페이지에서는 공통 모듈로 
+        // 검증 도구를 사용하고 HTML에서 어떠한 검증 규칙을 사용할지만
+        // 명시하면 간단하게 확장할 수 있다.
+        // decorator 패턴의 장점은 검증 규칙도 decorate() 함수를 통해
+        // 검증 규칙 이름과 검증 방식을 손 쉽게 확장할 수 있다는 것이다.
         (function () {
             var formPersonalInformation = document.getElementById("personalInformation")
                 , validator = new Validator(formPersonalInformation);

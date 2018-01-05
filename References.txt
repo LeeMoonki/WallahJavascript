@@ -19,9 +19,15 @@ https://developer.mozilla.org/en-US/docs/Web/API/EventTarget
 // and include attributes, className so on (related to control an element)
 https://developer.mozilla.org/en-US/docs/Web/API/Element
 
+// Regular Expressions
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+
 
 // Other references
 
 // HTML, HTML5, CSS, CSS3, Javascript, jQuery etc
 // especially RegEx in JAVASCRIPT section
 http://www.florakid.com/florakid_lib/index.html
+
+// NHN Javascript development guide
+https://github.com/nhnent/fe.javascript/wiki
