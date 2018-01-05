@@ -20,7 +20,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/EventTarget
 https://developer.mozilla.org/en-US/docs/Web/API/Element
 
 
-// other references
+// Other references
 
 // HTML, HTML5, CSS, CSS3, Javascript, jQuery etc
 // especially RegEx in JAVASCRIPT section
