@@ -3,6 +3,7 @@
 // When writing code for the Web with JavaScript, there are a great many APIs available. 
 // Below is a list of all the interfaces (that is, types of objects) 
 // that you may be able to use while developing your Web app or site.
+// WebAPI
 https://developer.mozilla.org/en-US/docs/Web/API
 
 // Document
@@ -17,3 +18,10 @@ https://developer.mozilla.org/en-US/docs/Web/API/EventTarget
 // It include about series of getElement* methods on certain Element
 // and include attributes, className so on (related to control an element)
 https://developer.mozilla.org/en-US/docs/Web/API/Element
+
+
+// other references
+
+// HTML, HTML5, CSS, CSS3, Javascript, jQuery etc
+// especially RegEx in JAVASCRIPT section
+http://www.florakid.com/florakid_lib/index.html
