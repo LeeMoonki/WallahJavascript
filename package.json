@@ -1,0 +1,20 @@
+{
+  "name": "wallah-javascript",
+  "version": "1.0.0",
+  "description": "This repository has codes for studying Vue.js and Javascript etc. Some codes or most are not my code. The origins I referenced are below.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeMoonki/WallahJavascript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeeMoonki/WallahJavascript/issues"
+  },
+  "homepage": "https://github.com/LeeMoonki/WallahJavascript#readme",
+  "dependencies": {}
+}
