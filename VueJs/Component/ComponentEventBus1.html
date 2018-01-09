@@ -45,6 +45,7 @@
         Vue.component("list-component", {
             template: "#list-template",
             created: function () {
+                // addTodo 메서드는 eventBus 객체에 바인딩되어 호출된다
                 eventBus.$on("add-todo", this.addTodo);
             },
             data: function () {
@@ -97,6 +98,7 @@
             },
             methods: {
                 addTodo: function () {
+                    // 추가 버튼을 클릭하면 $emit() 메서드를 통해 이벤트를 발신한다
                     eventBus.$emit("add-todo", this.todo);
                     this.todo = "";
                 }
