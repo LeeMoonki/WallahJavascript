@@ -78,7 +78,7 @@
                 };
             } else {
                 addEventHandler = function (dom, type, fn) {
-                    don["on" + type] = fn;
+                    dom["on" + type] = fn;
                 };
                 removeEventHandler = function (dom, type, fn) {
                     dom["on" + type] = null;
