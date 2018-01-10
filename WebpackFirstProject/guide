@@ -1,0 +1,25 @@
+다음 명령어를 이용해 Webpack을 전역과 프로젝트 수준에서 설치한다.
+프로젝트 수준에서는 개발 의존성으로 설치하기 위해 --save-dev 옵션을 이용한다.
+
+[전역설치]
+npm install -g webpack (Windows)
+sudo npm install -g webpack (macOs)
+
+[개발 의존성 설치]
+npm install --save-dev webpack
+
+이제 Babel 트랜스파일러와 Webpack에서 이용하기 위한 babel-loader를 설치한다.
+이것들은 개발 의존성으로 프로젝트 수준에서 설치한다. 추가된 개발 의존성 정보는 package.json에 반영된다.
+개발 의존성으로 설치한 패키지들은 트랜스파일, 번들링시에만 사용된다.
+
+npm install --save-dev babel babel-core babel-loader babel-preset-es2015
+
+이 예제를 만들기 위해서는
+public directory에 dist directory를 제외하고 모두 작성한다.
+그리고 프로젝트의 위치(여기에서는 WebpackFirstProject)에서 다음을 실행한다.
+
+npm run build
+
+그러면 번들링(bundling)을 수행하며 결과는 public/dist/main.js 에 저장된다.
+
+그리고 public/index.html 을 실행해본다.

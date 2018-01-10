@@ -1,0 +1,20 @@
+Vue CLI 설치
+
+npm install -g vue-cli (Windows)
+sudo npm install -g vue-cli (macOS)
+
+설치 후에 vue list 를 치면 생성 가능한 vue 템플릿들이 나타난다.
+
+  Available official templates:
+
+  ★  browserify - A full-featured Browserify + vueify setup with hot-reload, linting & unit testing.
+  ★  browserify-simple - A simple Browserify + vueify setup for quick prototyping.
+  ★  pwa - PWA template for vue-cli based on the webpack template
+  ★  simple - The simplest possible Vue setup in a single HTML file
+  ★  webpack - A full-featured Webpack + vue-loader setup with hot reload, linting, testing & css extraction.
+  ★  webpack-simple - A simple Webpack + vue-loader setup for quick prototyping.
+
+
+vue init 'template' 'template name' 은 template를 이용해서 template name이란 이름을 갖는 vue 프로젝트를 생성한다.
+
+예 : vue init simple hellovuejs 
