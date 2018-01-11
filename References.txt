@@ -6,38 +6,41 @@ This contains references information for anything I needed.
 When writing code for the Web with JavaScript, there are a great many APIs available. 
 Below is a list of all the interfaces (that is, types of objects) 
 that you may be able to use while developing your Web app or site.
-WebAPI
+#WebAPI
 https://developer.mozilla.org/en-US/docs/Web/API
 
-- Document
+#Document
 It include about series of getElement* methods
 https://developer.mozilla.org/en-US/docs/Web/API/Document
 
-- EventTarget
+#EventTarget
 It include about EventTarget.addEventListener()
 https://developer.mozilla.org/en-US/docs/Web/API/EventTarget
 
-- Element
+#Element
 It include about series of getElement* methods on certain Element
 and include attributes, className so on (related to control an element)
 https://developer.mozilla.org/en-US/docs/Web/API/Element
 
-- Regular Expressions
+#Regular Expressions
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 
 
 // Other references
 
-//HTML, HTML5, CSS, CSS3, Javascript, jQuery etc
-//especially RegEx in JAVASCRIPT section
+#HTML, #HTML5, #CSS, #CSS3, #Javascript, #jQuery etc
+especially RegEx in JAVASCRIPT section
 http://www.florakid.com/florakid_lib/index.html
 
-// NHN Javascript development guide
+#NHN Javascript development guide
 https://github.com/nhnent/fe.javascript/wiki
 
-// attachEvent
+// #attachEvent
 http://help.dottoro.com/ljinxrmt.php
 
-// global node_module location
+#global #node_module #location
 // type 'node -h' in macOS terminal then the directory path shown up
 // /usr/local/lib/node_modules/npm 
+
+#dinosaurs #webpack #babel #node #npm
+https://march23hare.github.io/2017/11/30/tr-modern-javascript-explained-for-dinosaurs/
