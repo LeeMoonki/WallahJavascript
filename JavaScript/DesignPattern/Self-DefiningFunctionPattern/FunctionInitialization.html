@@ -1,0 +1,62 @@
+<!--
+    초기화 단계를 거치고 나면 이후에 같은 작업을 계속 반복하지 않아도 될 때는
+    초기화 단계의 정보를 클로저에 보관하고 변경되는 내용만 변경되도록 Self-defining Function 패턴을 이용하면 좋다.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Self-defining Function Pattern</title>
+        <style>
+            #commentWrapper {width:200px}
+            .comment {width:150px;display:inline-block}
+            .name {width:40px;display:inline-block}
+        </style>
+    </head>
+    <body>
+        <div id="commentWrapper">
+            <div>
+                <div class="comment">Comment</div>
+                <div class="name">Name</div>
+            </div>
+        </div>
+        <form id="formComment">
+            <label>Comment: <input type="text" id="comment"></label>
+            <label>Name: <input type="text" id="name"></label>
+            <input type="submit">
+        </form>
+        <script type="text/javascript">
+            var addComment = function () {
+                var divCommentWrapper = document.getElementById("commentWrapper")
+                    , divCommentRow = document.createElement("div")
+                    , divComment = document.createElement("div")
+                    , divName = document.createElement("div")
+                    , inputComment = document.getElementById("comment")
+                    , inputName = document.getElementById("name");
+                
+                divComment.className = "comment";
+                divName.className = "name";
+                divCommentRow.appendChild(divComment);
+                divCommentRow.appendChild(divName);
+
+                addComment = function () {
+                    divComment.innerHTML = inputComment.value;
+                    divName.innerHTML = inputName.value;
+
+                    inputComment.value = "";
+                    inputName.value = "";
+
+                    divCommentWrapper.appendChild(divCommentRow.cloneNode(true));
+                };
+
+                addComment();
+            };
+
+            document.getElementById("formComment").addEventListener("submit", function (event) {
+                addComment();
+                event.returnValue = false;
+                return false;
+            });
+        </script>
+    </body>
+</html>

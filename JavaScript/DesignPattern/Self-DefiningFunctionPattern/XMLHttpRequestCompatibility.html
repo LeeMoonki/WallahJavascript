@@ -1,0 +1,53 @@
+<!--
+    Init-TimeBranchingPattern의 XMLHttpRequestCompatibility 와 유사하다.
+    다른 점은 getXHR() 함수가 확실히 결정되는 시기이다.
+
+    getXHR() 함수가 최초로 호출될 때는 먼저 어떠한 방법으로 XMLHttpRequest를 정의할지 분기하여 객체를 반환하고,
+    호출된 getXHR() 함수를 다시 정의하여 "이후 getXHR() 함수가 호출 될 때는 같은 방법으로 XMLHttpRequest 객체를
+    생성하도록 하고 있다."
+
+    -> 즉, 함수가 최초로 호출 될 때만 분기를 하고 다음부터는 분기된 내용으로 바로 함수를 호출한다
+
+    이렇게 호출된 함수가 최초 또는 특정 조건에 만족하였을 때 다시 자기 자신을 정의하는 패턴을
+    Self-defining function이라고 하며, 실제로 함수가 필요하여 호출될 때 함수를 재정의하므로
+    불필요한 컴퓨팅 자원 소모를 최소화할 수 있다.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>XMLHttpRequestCompatibility</title>
+    </head>
+    <body>
+    
+        <script type="text/javascript">
+            var getXHR = function () {
+                var xhr;
+                if (window.XMLHttpRequest) {
+                    getXHR = function () {
+                        return new XMLHttpRequest();
+                    };
+                    return new XMLHttpRequest();
+                }
+
+                try {
+                    xhr = new ActiveXObject("MSXML2.XMLHTTP.6.0");
+                    getXHR = function () {
+                        return new new ActiveXObject("MSXML2.XMLHTTP.6.0");
+                    };
+                    return xhr;
+                } catch (e) {
+                    try {
+                        xhr = new ActiveXObject("MSXML2.XMLHTTP.3.0");
+                        getXHR = function () {
+                            return new ActiveObject("MSXML2.XMLHTTP.3.0");
+                        };
+                        return xhr;
+                    } catch (e) {
+                        alert("This browser does not support XMLHttpRequest");
+                    }
+                }
+            };
+        </script>
+    </body>
+</html>
