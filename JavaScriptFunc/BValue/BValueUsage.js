@@ -1,3 +1,4 @@
+// data
 var users = [
     { id: 1, name: "ID", age: 32 },
     { id: 2, name: "HA", age: 25 },
@@ -7,7 +8,9 @@ var users = [
     { id: 6, name: "JM", age: 33 },
     { id: 7, name: "HI", age: 24 }
 ];
+// //data
 
+// filter, map
 function filter(list, predicate) {
     var new_list = [];
     for (var i = 0, len = list.length; i < len; i++) {
@@ -25,6 +28,7 @@ function map(list, iteratee) {
     }
     return new_list;
 }
+// //filter, map
 
 function bvalue(key) {
     return function(obj) {
