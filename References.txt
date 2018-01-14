@@ -34,6 +34,12 @@ http://www.florakid.com/florakid_lib/index.html
 
 #NHN Javascript development guide
 https://github.com/nhnent/fe.javascript/wiki
+#Air bnb coding convention
+https://github.com/airbnb/javascript
+#Google coding convention
+https://google.github.io/styleguide/jsguide.html
+#ESLint
+https://github.com/eslint/eslint
 
 #attachEvent
 http://help.dottoro.com/ljinxrmt.php
@@ -44,3 +50,8 @@ http://help.dottoro.com/ljinxrmt.php
 
 #dinosaurs #webpack #babel #node #npm
 https://march23hare.github.io/2017/11/30/tr-modern-javascript-explained-for-dinosaurs/
+
+
+// For Short Coding
+#JS Fiddle
+https://jsfiddle.net/

@@ -1,0 +1,70 @@
+<!--
+    
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+
+            // 다른 개발자가 내가 작성한 유틸리티함수(GetXPoint)를 자신의 모듈/프로그램에 카피 앤 페이스트를 하여 사용하는데
+            // 가져다 쓰는 프로그램에 유틸리티의 특정 변수값이 정의되어 있는지 체크해야하는 경우 다음과 같은 방법들이 있다.
+
+            // 다음 CheckExistence 함수는 GetXPoint 변수가 있으면 그대로 사용하고
+            // 없다면 함수를 정의한다. 
+            // 이렇게 해야 다른 사람이 카피 앤 페이스트를 해도 안전하게 GetXPoint 가 존재하는 지 체크할 수 있다.
+            function CheckExistence () {
+                var existFunction = (typeof GetXPoint !== "undefined") ?
+                    GetXPoint :
+                    function () {
+                        // function of getting X coordinates of window 
+                    };
+                
+                var xpoint = existFunction();
+                // ...
+            }
+            
+            // IIFE
+            (function () {
+                function GetXPoint () {
+                    // defined by my style
+                    // function of getting X coordinates of window
+                }
+
+                // GetXPoint는 전역 변수가 아니지만, typeof 안전 가드를 이용하여 안전하게 체크하고 있다
+                // 그리고 이 코드에서는 (window.__ 식으로 전역 변수에 했던 것처럼) 체크 용도로 사용할 만한 객체(window)가 없기 때문에 typeof가 유용하다 
+                function CheckExistence () {
+                    var existFunction = (typeof GetXPoint !== "undefined") ?
+                        GetXPoint :
+                        function () {
+                            // default GetXPoint Function
+                            // function of getting X coordinates of window 
+                        };
+                    
+                    var xpoint = existFunction();
+                    // ...
+                }
+
+                CheckExistence();
+            }());
+
+            // '의존성 주입(Dependency Injection)' 설계 패턴을 선호하는 경우 다음처럼
+            // GetXPoint가 CheckExistence() 의 바깥이나 언저리에 정의되었는지 암시적으로 조사하는 대신
+            // 다음 코드처럼 명시적으로 의존 관계를 전달하는 것이다.
+            function CheckExistence (GetXPoint) {
+                var existFunction = GetXPoint ||
+                    function () {
+                        // function of getting X coordinates of window 
+                    };
+                
+                var xpoint = existFunction();
+                // ...
+            }
+        </script>
+    </body>
+</html>

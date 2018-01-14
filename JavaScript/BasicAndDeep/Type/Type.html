@@ -1,0 +1,71 @@
+<!--
+    
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Type</title>
+        
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+            console.log("typeof 의 결과 값은 string 타입");
+            console.log('typeof typeof "30" === "string" : ',typeof typeof "30" === "string");
+            console.log('\ntypeof undefined === "undefined" : ', typeof undefined === "undefined");
+            console.log('!undefined : ', !undefined);
+            console.log('typeof true === "boolean" : ', typeof true === "boolean");
+            console.log('typeof 30 === "number" : ', typeof 30 === "number");
+            console.log('typeof "30" === "string" : ', typeof "30" === "string");
+            console.log('typeof { life: 30 } === "object" : ', typeof { life: 30 } === "object");
+
+            console.log("\nSymbole()은 ES6에서 추가");
+            console.log('typeof Symbol() === "symbol" : ', typeof Symbol() === "symbol");
+
+            console.log("\nnull은 object 타입");
+            console.log('typeof null === "object" : ', typeof null === "object");
+
+            // null 값을 체크하려면 하나의 조건이 더 필요하다
+            var a = null;
+            console.log('!a && typeof a === "object" : ', !a && typeof a === "object");
+
+            console.log("\n함수의 typeof");
+            console.log('typeof function b() { } ==== "function" : ', typeof function b() { } === "function");
+
+            console.log('\ntypeof [1, 2, 3] === "obeject" : ', typeof [1, 2, 3] === "object");
+
+            // "undefined"는 접근 가능한 스코프에 변수가 선언되었으나 현재 아무 값도 할당되지 않은 상태를 가리키는 반면
+            // "undefined"는 접근 가능한 스코프에 변수 자체가 선언조차 되지 않은 상태를 말한다
+            console.log("\nundefined에 대해여");
+            var b;
+            console.log("b : ", b);
+            try {
+                console.log("c : ", c); // 선언하지 않았는데 접근하면 오류를 발생시킨다
+            } catch (e) {
+                console.log(e);
+            }
+            console.log("typeof b : ", typeof b);
+            console.log("typeof c : ", typeof c); // 선언하지 않은 변수의 typeof 값은 undfined 이다. (typeof의 안전 가드; safety guard)
+
+            // 따라서 값의 존재여부를 학인하고자 할 때는 다음과 같이 해야 한다
+            if (typeof c !== "undefined") {
+                console.log("c의 값이 존재 한다.");
+            }
+
+            // typeof 안전 가드 없이 전역 변수를 체크하는 다른 방법은 전역 변수가 모두 전역 객체(브라우저는 window)의 프로퍼티라는 점을 이용하는 것이다
+            if (window.c) {
+                console.log("window에 c 값이 존재");
+            } else {
+                console.log("window에 c 값이 존재 X");
+            }
+
+            if (!window.myFunc) {
+                console.log("window에 함수 myFunc이 없으면 myFunc을 생성");
+                window.myFunc = function () {
+                    console.log("Hi JS");
+                };
+            }
+        </script>
+    </body>
+</html>
