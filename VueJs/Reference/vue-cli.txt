@@ -16,5 +16,4 @@ sudo npm install -g vue-cli (macOS)
 
 
 vue init 'template' 'template name' 은 template를 이용해서 template name이란 이름을 갖는 vue 프로젝트를 생성한다.
-
 예 : vue init simple hellovuejs 
