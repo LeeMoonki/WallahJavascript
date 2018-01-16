@@ -51,6 +51,9 @@ http://help.dottoro.com/ljinxrmt.php
 #dinosaurs #webpack #babel #node #npm
 https://march23hare.github.io/2017/11/30/tr-modern-javascript-explained-for-dinosaurs/
 
+// Git Guide
+#Git#Git Guide
+https://backlog.com/git-tutorial/kr/
 
 // For Short Coding
 #JS Fiddle
