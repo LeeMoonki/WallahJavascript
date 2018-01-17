@@ -1,0 +1,75 @@
+<!--
+    
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Array-Like Object</title>
+        
+    </head>
+    <body>
+        <form id="form1">
+            <input type="text" name="input1">
+        </form>
+        <form id="form2">
+            <input type="text" name="input2">
+        </form>
+        <div class="countClass"></div>
+        <div class="countClass">
+            <div class="countClass"></div>
+        </div>
+        <script type="text/javascript">
+            // 유사배열은 여러 요소를 갖고있고, 특히 length property를 갖고있다.
+            // 다음은 유사배열의 예. 
+
+            console.log("document.forms.length : ", document.forms.length);
+            console.log("document.forms[1]", document.forms[1]);
+
+            var countClassEles = document.getElementsByClassName("countClass");
+            console.log("\ncountClassEles.length : ", countClassEles.length);
+            console.log("countClassEles[1] : ", countClassEles[1]);
+
+            arrayLikeFunc("first argument", 10, "Hi");
+
+            // 하지만 유사배열은 배열의 메서드를 갖고있지 않으며 for-in loop 를 지원하지 않는다.
+            // 이러한 유사배열을 배열로 변환하는 방법은 배열을 반환하는 배열 메서드(indexOf(), concat(), forEach(), slice() 등)을
+            // 사용한다. 그중 제일 많이 사용하는 것은 slice() 메서드이다.
+            arrayLikeFunc1("push0");
+
+            // ES6 부터는 slice()를 사용하는 대신 Array.from()을 사용한다
+            arrayLikeFunc2("push0");
+
+
+            function arrayLikeFunc () {
+                console.log("\narrayLikeFunc");
+                console.log("arrayLikeFunc.arguments.length : ", arguments.length);
+                if (arguments.length > 0) {
+                    console.log("arrayLikeFunc.arguments[0] : ", arguments[0]);
+                }
+            }
+
+            function arrayLikeFunc1 () {
+                var arrlike = arguments;
+
+                console.log("\narrayLikeFunc1");
+                try {
+                    arrlike.push("push1");
+                } catch (e) {
+                    console.log("arrlike isn't an array not yet");
+                }
+                arrlike = Array.prototype.slice.call(arguments); // [1, 2, 3].slice() -> [1, 2, 3]
+                arrlike.push("push1");
+                console.log("arrlike : ", arrlike);
+            }
+
+            function arrayLikeFunc2 () {
+                var arrlike = Array.from(arguments);
+
+                console.log("\narrayLikeFunc2");
+                arrlike.push("push1");
+                console.log("arrlike : ", arrlike);
+            }
+        </script>
+    </body>
+</html>
