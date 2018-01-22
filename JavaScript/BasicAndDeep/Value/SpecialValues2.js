@@ -112,3 +112,36 @@ console.log("\nisNegZero(-0) : ", isNegZero(-0));
 console.log("isNegZero(0) : ", isNegZero(0));
 
 // +0, -0은 어떤 변수값이 0에 도달하여 부호가 바뀌는 순간, 그 직전까지 이 변수의 이동 방향을 알려준다.
+
+
+// #Object.is()
+// ES6 부터는 잡다한 예외를 걱정하지 않아도 두 값이 절대적으로 동등한지를 확인하는 새로운 유틸리티를 지원한다.
+// 바로 Object.is() 다.
+
+// ES6 이전 환경을 위한 폴리필은 다음과 같다.
+
+if (!Object.is) {
+    Object.is = function (v1, v2) {
+        // -0 test
+        if (v1 === 0 && v2 === 0) {
+            return 1 / v1 === 1 / v2;
+        }
+        // NaN test
+        if (v1 !== v2) {
+            return v2 !== v2;
+        }
+        // etc
+        return v1 === v2;
+    };
+}
+
+var val1 = 2 / "foo";
+var val2 = -3 * 0;
+
+console.log("\nval1 : ", val1);
+console.log("val2 : ", val2);
+console.log("Object.is(val1, NaN) : ", Object.is(val1, NaN)); // true
+console.log("Object.is(val2, -0) : ", Object.is(val2, -0)); // true
+console.log("Object.is(val2, 0) : ", Object.is(val2, 0)); // false
+
+// == 또는 === 이 안전하다면 굳이 Object.is()는 사용하지 않는 편이 좋다.
