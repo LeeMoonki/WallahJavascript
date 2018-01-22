@@ -1,0 +1,14 @@
+#Array MDN
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+#String MDN
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+
+#Number MDN
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+#Bitwise operators MDN
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#Bitwise_operators
+
+#자바스크립트 비트 연산자를 이용한 소수점 제거
+http://henotia.tistory.com/115

@@ -1,5 +1,14 @@
 This contains references information for anything I needed.
 
+// ECMAScript Language Specification
+#ES5 #ECMA-262 5.1 Edition
+http://www.ecma-international.org/ecma-262/5.1/
+
+#ES6 #ECMA-262 6th Edition
+http://www.ecma-international.org/ecma-262/6.0/
+
+#EXMAScript 6 - New Features: Overview & Comparison
+http://es6-features.org/#Constants
 
 // DOM MDN reference
 
