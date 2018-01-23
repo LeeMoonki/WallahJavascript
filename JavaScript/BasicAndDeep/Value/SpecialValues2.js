@@ -103,6 +103,7 @@ console.log("pzero > mzero : ", pzero > mzero);
 
 // 확실하게 -0과 0을 구분하고 싶다면 다음을 사용한다
 
+// Node와 IE에서는 0으로 보여준다. 즉, 보여주기는 0이지만 동작은 -0이다.
 function isNegZero (n) {
     n = Number(n);
     return (n === 0) && (1 / n === -Infinity);
