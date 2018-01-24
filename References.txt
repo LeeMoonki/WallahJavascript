@@ -63,6 +63,10 @@ https://march23hare.github.io/2017/11/30/tr-modern-javascript-explained-for-dino
 // Git Guide
 #Git#Git Guide
 https://backlog.com/git-tutorial/kr/
+#Git
+https://git-scm.com/
+#Git guide
+https://git-scm.com/book/ko/v2
 
 // For Short Coding
 #JS Fiddle
