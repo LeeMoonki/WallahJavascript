@@ -1,0 +1,6 @@
+// Vue extension
+Vue.js Extension Pack 을 설치했다.
+코딩 중간에 오류가 생길만한 것을 표시해 주는데, 잘못된 위치에서 잘못된 오류를 짚는 것이 성가셔 다음처럼 해당 기능을 껐다.
+
+"vetur.validation.template": false,
+
