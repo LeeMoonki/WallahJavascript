@@ -1,0 +1,60 @@
+<!--
+    Props 단방향 데이터
+    모든 props는 하위 속성과 상위 속성 사이의 단방향 바인딩을 형성합니다. 
+    상위 속성이 업데이트되면 하위로 흐르게 되지만 그 반대는 안됩니다. 
+    이렇게하면 하위 컴포넌트가 실수로 부모의 상태를 변경하여 앱의 데이터 흐름을 추론하기 더 어렵게 만드는 것을 방지할 수 있습니다.
+
+    그리고 부모 컴포넌트가 수정될 때마다 모든 자식들의 props는 최신 값들로 업데이트 됩니다.
+    이것이 의미하는 것은 부모로 부터 받은 자식의 props를 자식 내부에서 변형시키려고 하면 절대 안 된다는 것입니다.
+
+    자식이 부모로부터 받은 props를 변형시키고 싶어하는 두가지 경우가 있습니다.
+    1) prop가 어떤 변수의 초기값으로 쓰이기 위해 전달되고, 자식은 이 값을 지역 변수의 속성으로 사용할 경우
+    2) prop가 raw 값으로 넘어오고 이 값을 수정해야 할 경우
+    
+    이럴 경우 아래 코드의 first-child component처럼 대처합니다.
+    1) initialCounter 2) size
+
+    주의 !!!!
+    JavaScript에서 Object와 Array는 참조에의해 전달되므로, 만약 자식이 전달받은 prop가 
+    Object나 Array같이 참조에의해 전달되는 것이라면 prop 자체를 자식 내부에서 수정하는 것은 
+    부모의 상태에 영향을 미친다.
+    (WallahJavaScript에서 JavaScript/BasicAndDeep/ValueAndReference.js를 참조)
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script src="../../../Vue2x/vue.js"></script>
+    </head>
+    <!-- 전역 컴포넌트 -->
+    <script type="text/javascript">
+        Vue.component('first-child', {
+            template: '<div>one way prop</div>',
+            props: ['initialCounter', 'size'],
+            data: function () {
+                // prop의 초기값(넘어온 값)으로 지역 속성을 초기화하여 정의합니다. 
+                return { counter: this.initialCounter };
+            },
+            computed: {
+                // prop의 값을 수정하는 계산된 속성을 정의합니다.
+                normalizedSize: function () {
+                    return this.size.trim().toLowerCase()
+                }
+            }
+        });
+    </script>
+    <!-- // 전역 컴포넌트 -->
+    <body>
+        <div id="app">
+            
+        </div>
+
+        <script type="text/javascript">
+            // 루트 인스턴스
+            var vm = new Vue({
+                el: '#app'
+            });
+        </script>
+    </body>
+</html>
