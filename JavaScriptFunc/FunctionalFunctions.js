@@ -9,6 +9,21 @@ function filter(list, predicate) {
     return new_list;
 }
 
+// insertIndexFilter
+// If list.length is large and we need to approach to a filtered data, knowing index of it is very useful.
+// This function is for it. The index will be recorded in each of result's object.
+function insertIndexFilter(list, predicate) {
+	var indexInsertedObject, new_list = [];
+	for (var i = 0, len = list.length; i < len; i++) {
+		if (predicate(list[i])) {
+			indexInsertedObject = list[i];
+			indexInsertedObject.index = i;
+			new_list.push(indexInsertedObject);
+		}
+	}
+	return new_list;
+}
+
 // map
 function map(list, iteratee) {
     var new_list = [];
