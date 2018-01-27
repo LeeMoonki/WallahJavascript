@@ -1,0 +1,45 @@
+<!--
+    Non-Prop Attributes 
+
+    prop가 아닌 속성은 컴포넌트로 전달은 되지만 prop에 정의되지 않은 prop 입니다.
+    명확히 정의된 prop는 자식 컴포넌트로 정보를 전달하기에 좋지만, 컴포넌트 라이브러리를 만드는 사람은
+    컴포넌트가 어느 상황에서 사용되는지 예측할 수 없습니다.
+    이것이 컴포넌트들이 root element에 컴포넌트의 임의 속성을 받아주는 이유입니다.
+
+    만약 다른 사람이 제작한 <bs-date-input></bs-date-input>이라는 컴포넌트를 사용한다고 가정해봅시다.
+    나는 이 컴포넌트의 input 태그에 Bootstrap에서 제공하는 data-3rd-date-picker 속성을 적용하고싶습니다.
+    당연히 <bs-date-input></bs-date-input>을 제작한 사람은 내가 data-3rd-date-picker를 사용할지 몰랐을 테고
+    <bs-date-input></bs-date-input> 내부 props에 date-3rd-date-picker라는 prop는 없을 겁니다.
+
+    하지만 내가 <bs-date-input date-3rd-date-picker="true"></bs-date-input> 처럼 prop가 아닌 속성을 추가하면
+    data-3rd-date-picker=true 속성이
+    <bs-date-input></bs-date-input>의 root element에 자동으로 추가됩니다.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script src="../../../Vue2x/vue.js"></script>
+    </head>
+    <!-- 전역 컴포넌트 -->
+    <script type="text/javascript">
+        // 컴포넌트의 template 요소가 2개 이상일 경우 이들을 감싸는 root element가 존재해야함을 명심!
+        Vue.component('child', {
+            template: '<div id="thisIsRootElement"><input type="text" class="classA"></div>'
+        });
+    </script>
+    <!-- // 전역 컴포넌트 -->
+    <body>
+        <div id="app">
+            <child data-set="non-prop attribute"></child>
+        </div>
+
+        <script type="text/javascript">
+            // 루트 인스턴스
+            var vm = new Vue({
+                el: '#app'
+            });
+        </script>
+    </body>
+</html>

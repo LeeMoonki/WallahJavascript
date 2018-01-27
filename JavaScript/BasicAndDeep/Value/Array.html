@@ -24,6 +24,8 @@
             arr3[2] = 3;
             console.log("arr3[1] : ", arr3[1]); // undefined
             // 이렇게 할당했을 때 arr3[1]은 비어있게 되는데 이러한 배열을 sparse array라고 한다.
+            // 크롬에서 for 문과 콘솔을 통해 배열을 돌면 sparse는 undefined로 출력되지만
+            // array 자체를 콘솔을 사용하지 않고 찍어보면 sparse는 아예 존재하지 않고 empty로 출력된다.
 
             // 배열 자체도 하나의 객체여서 "key/value" 특성을 이용할 수 있다. 하지만 key에 정수 혹은 정수로 변환되는 문자열이 아닐경우 
             // 배열의 길이(.length 의 반환값)는 바뀌지 않는다.

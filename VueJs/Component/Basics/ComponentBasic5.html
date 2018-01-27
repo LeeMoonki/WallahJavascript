@@ -1,0 +1,81 @@
+<!--
+    Prop Validation 
+
+    컴포넌트는 props가 전달받을 값들에 조건을 설정할 수 있습니다. 만약 이 조건을 충족하지 않은 값들이 부모로부터 넘어온다면 
+    Vue는 경고를 할것입니다. 이러한 조건들은 컴포넌트가 다른곳에서 사용될 때 특히 유용합니다.
+
+    만약 검증조건(validation requirement)을 설정한다면 props를 배열로 정의하는 대신 객체를 사용할 수 있습니다.
+
+    type은 다음 값 중 하나가 될 수 있습니다. 
+    1) String 2) Number 3) Boolean 4) Function 5) Object 6) Array 7) Symbol
+
+    props의 검증은 component가 인스턴스가 되기 전에 수행되므로 default 또는 validator 내부의 함수나 
+    component instance의 data, computed 또는 methods 속성들은 그 때에 동작하지 않습니다.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script src="../../../Vue2x/vue.js"></script>
+    </head>
+    <!-- 전역 컴포넌트 -->
+    <script type="text/javascript">
+        Vue.component('validation-component', {
+            template: '<div>propC : {{ propC }}, propD : {{ propD }}</div>',
+            props: {
+                // 기본적인 데이터 타입 체크 (null이면 모든 타입)
+                propA: Number,
+                // 여러가지의 가능한 타입을 지정할 수 있습니다.
+                propB: [String, Number],
+                // 반드시 전달 받아야하는 문자열
+                propC: {
+                    type: String,
+                    required: true
+                },
+                // 기본 값이 설정된 숫자 타입
+                propD: {
+                    type: Number,
+                    default: 100
+                },
+                // 객체(Object)와 배열(Array)의 기본 값은 반드시 
+                // 팩토리 함수(Factory function)로 부터 반환되어야 합니다.
+                propE: {
+                    type: Object,
+                    default: function () {
+                        return { message: "hello" };
+                    }
+                },
+                // 커스텀 검증 함수
+                propF: {
+                    validator: function (v) {
+                        return v > 10;
+                    }
+                }
+            }
+        });
+    </script>
+    <!-- // 전역 컴포넌트 -->
+    <body>
+        <div id="app">
+            <validation-component prop-c="required!"></validation-component>
+            <!-- propD는 Number 타입인데 리터럴로 숫자를 넘기면 props에서는 문자열로 인식한다. --> 
+            <!-- <validation-component prop-c="required!!" prop-d="10"></validation-component> -->
+            <!-- 그래서 다음과 같이 v-bind를 통해 넘겨줘야 한다. -->
+            <validation-component prop-c="required!!" :prop-d="10"></validation-component>
+            <validation-component prop-c="required!!" v-bind:prop-d="15"></validation-component>
+            <!-- 부모로부터 값을 넘겨 받을 때 -->
+            <validation-component prop-c="required!!" :prop-d="numVal"></validation-component>
+        </div>
+
+        <script type="text/javascript">
+            // 루트 인스턴스
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    numVal: 50
+                }
+            });
+        </script>
+    </body>
+</html>
