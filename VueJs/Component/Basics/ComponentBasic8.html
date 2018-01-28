@@ -1,0 +1,71 @@
+<!--
+    v-on을 이용한 사용자 이벤트
+
+    모든 Vue 인스턴스는 다음과 같은 '이벤트 인터페이스(Event Interface)를 구현합니다.'
+
+    $on(eventName) 를 사용하여 이벤트를 감지
+    $emit(eventName) 를 사용하여 이벤트를 발생
+
+    !! Vue의 이벤트 시스템은 브라우저의 EventTarget API 와 별개입니다. 비슷하게 작동하지만 
+    $on 과 $emit 은 addEventListener와 dispatchEvent 의 별칭이 아닙니다.
+
+    또한 부모 컴포넌트는 자식 컴포넌트가 사용되는 template에서 직접 v-on 을 사용하여 자식 컴포넌트에서 
+    보내진 이벤트를 감지할 수 있습니다.
+
+    !! $on 은 자식에서 호출한 이벤트는 감지하지 않습니다. v-on 을 template에서 반드시 지정해야 합니다.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script src="../../../Vue2x/vue.js"></script>
+    </head>
+    <!-- 전역 컴포넌트 -->
+    <script type="text/javascript">
+        Vue.component('child', {
+            template: '<button v-on:click="incrementCounter">{{ counter }}</button>',
+            data: function () {
+                return {
+                    counter: 0
+                };
+            },
+            methods: {
+                incrementCounter: function () {
+                    this.counter = this.counter + 1;
+                    this.$emit('increment'); // 부모에게 "지금 increment가 발생했어요!" 라는 이벤트를 발생시킨다.
+                }
+            }
+        });
+    </script>
+    <!-- // 전역 컴포넌트 -->
+    <body>
+        <!-- 여기에서 매우 중요한 사실은 자식 컴포넌트는 외부에서 발생하는 상황으로부터 완전히 분리되어있다는 것입니다. -->
+        <!-- 부모 컴포넌트가 자식 컴포넌트의 상황에 대해 신경쓸 경우에만 자식 컴포넌트는 부모에게 상황을 알릴 뿐입니다. -->
+        <div id="parent">
+            <p>{{ total }}</p>
+            <br>
+            <!-- 자식에서 increment 이벤트가 발생했다는 걸 알려온다면 부모의 incrementTotal을 실행 -->
+            <child v-on:increment="incrementTotal"></child> 
+            <child v-on:increment="incrementTotal"></child>
+            <child v-on:click="incrementTotal"></child> <!-- 이렇게 하면 자식 컴포넌트에서 $emit('click')을 설정하지 않아 부모가 전달받을 이벤트가 없다 -->
+            <!-- 만약 기본 내장 이벤트 click을 자식 컴포넌트의 root element에 등록하고 싶다면 다음처럼 .native를 사용한다. -->
+            <child v-on:click.native="incrementTotal"></child>
+        </div>
+
+        <script type="text/javascript">
+            // 루트 인스턴스
+            var vm = new Vue({
+                el: '#parent',
+                data: {
+                    total: 0
+                },
+                methods: {
+                    incrementTotal: function () {
+                        this.total = this.total + 1;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

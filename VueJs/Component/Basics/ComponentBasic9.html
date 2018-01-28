@@ -1,0 +1,83 @@
+<!--
+    사용자 정의를 이벤트를 사용하여 폼 입력 컴포넌트를 만들기
+
+    사용자 정의 이벤트는 v-model 에서 작동하는 사용자 정의 입력을 만드는데에도 사용할 수 있습니다. 
+
+    <input v-modl="somethig">
+    은 아래와 같습니다.
+    <input :value="something" @input="something = $event.target.value">
+    컴포넌트와 같이 사용된다면 다음과 같이 간단해집니다.
+    <custom-input
+        :value="something"
+        @input="value => { something = value; }">
+    </custom-input>
+
+    따라서 v-model 과 함께 동작하는 컴포넌트는 
+    1) value prop를 전달받을 준비를 해야하고 
+    2) 새로받은 값(value)를 사용하고 $emit('input') 을 통해 input 이벤트를 부모에게 알려야 합니다.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script src="../../../Vue2x/vue.js"></script>
+    </head>
+    <!-- 전역 컴포넌트 -->
+    <template id="childTemplate">
+        <span>
+            $
+            <input
+                ref="input"
+                :value="newValue"
+                @input="updateValue($event.target.value)">
+        </span>
+    </template>
+    <script type="text/javascript">
+        Vue.component('child', {
+            template: '#childTemplate',
+            props: ['newValue'],
+            methods: {
+                updateValue: function (newValue) {
+                    // 값을 직접 업데이트 하는 대신 이 메소드를 사용하여 
+                    // 입력 값에 대한 서식을 지정하고 배치 할 수 있습니다.
+                    var formattedValue = newValue
+                        .trim()
+                        .slice(0, newValue.indexOf('.') === -1 ? newValue.length : newValue.indexOf('.') + 3);
+                    
+                    // 값이 아직 정규화 되지 않은 경우 
+                    // 이를 수동으로 재정의하여 조건을 충족시킵니다.
+                    if (formattedValue !== newValue) {
+                        this.$refs.input.value = formattedValue;
+                    }
+
+                    // 입력 이벤트를 통해 숫자 값을 내보냅니다.
+                    this.$emit('inputbell', Number(formattedValue));
+                }
+            }
+        });
+    </script>
+    <!-- // 전역 컴포넌트 -->
+    <body>
+        <div id="app">
+            <child @inputbell="showReceiveVal"></child>
+            <div>{{ receiveVal }}</div>
+        </div>
+
+        <script type="text/javascript">
+            // 루트 인스턴스
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    receiveVal: 0
+                },
+                methods: {
+                    showReceiveVal: function (val) {
+                        // 자식에서 $emit을 정의할 때 넘긴 Number(formattedValue)가 val로 넘어온다.
+                        this.receiveVal = val;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
