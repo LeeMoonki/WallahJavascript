@@ -31,8 +31,17 @@ It include about series of getElement* methods on certain Element
 and include attributes, className so on (related to control an element)
 https://developer.mozilla.org/en-US/docs/Web/API/Element
 
-#Regular Expressions
+#Regular Expressions Mozilla
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+#Regular Expression Explain
+https://regexone.com/
+
+#Regular Expression Test Site
+https://regexr.com/
+#Regular Expression Display
+https://regexper.com/#%2F%5B%5E0-9%5D%2Fg
+
+
 
 
 // Other references
