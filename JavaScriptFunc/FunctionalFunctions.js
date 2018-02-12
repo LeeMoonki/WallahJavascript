@@ -75,3 +75,40 @@ function bmatch (obj2, val) {
     if (arguments.length === 2) obj2 = object(obj2, val);
     return function (obj) { return match(obj, obj2); }
 }
+
+// identity
+function identity(v) {
+    return v;
+}
+
+// not
+function not(v) {
+    return !v;
+}
+
+// beq
+function beq(a) {
+    return function(b) {
+        return a === b;
+    }
+}
+
+// positive
+function positive(list) {
+    return find(list, identity);
+}
+
+// negativeIndex
+function negativeIndex(list) {
+    return findIndex(list, not);
+}
+
+// some
+function some(list) {
+    return not(not(positive(list)));
+}
+
+// every
+function every(list) {
+    return beq(negativeIndex(list));
+}
