@@ -19,6 +19,7 @@ function checkRequired(obj, unselectedVal) {
 		$obj,
 		tagName = "",
 		iptType = "",
+		dataType = "",
 		$tempTarget;
 
 	if (obj.tagName === undefined) {
@@ -32,14 +33,19 @@ function checkRequired(obj, unselectedVal) {
 	}
 
 	tagName = $obj.prop("tagName");
+	dataType = $obj.attr("data-type");
 
 	if (tagName === "INPUT") {
 		iptType = $obj.attr("type");
 
 		if (iptType === "text") {
 
-			if (newTrim($obj.val()).length > 0) {
-				resultFlag = true;
+			if (dataType === "phone") {
+				return /^(\d{3,4})-?(\d{4})$/.test($obj.val());
+			} else {
+				if (newTrim($obj.val()).length > 0) {
+					resultFlag = true;
+				}
 			}
 
 		} else if (iptType === "checkbox") {
@@ -49,14 +55,16 @@ function checkRequired(obj, unselectedVal) {
 			}
 
 		} else if (iptType === "radio") {
-			
+
 			$('input[name=' + $obj.attr("name") + ']')
 				.each(function (innerIndex, innerObj) {
 					if ($(innerObj).prop("checked")) {
 						resultFlag = true;
 						return false;
 					}
-			});
+				});
+
+
 		} else if (iptType === "password") {
 
 			if (newTrim($obj.val()).length > 0) {
@@ -66,8 +74,8 @@ function checkRequired(obj, unselectedVal) {
 		}
 
 	} else if (tagName === "SELECT") {
-		
-		if ($obj.val() !== unselectedVal) {
+
+		if (Number($obj.val()) !== unselectedVal) {
 			resultFlag = true;
 		}
 
