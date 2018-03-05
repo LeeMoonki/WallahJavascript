@@ -34,3 +34,5 @@ console.log("truthy1 && falsy1 : ", truthy1 && falsy1); // null
 console.log("falsy1 && truthy1 : ", falsy1 && truthy1); // null
 console.log("falsy2 && falsy1 : ", falsy2 && falsy1); // undefined
 console.log("truthy2 && truthy1 : ", truthy2 && truthy1); // 30
+
+// 사실 위처럼 왼쪽 오른쪽을 따지는 것 보다, Grammar의 단락 평가(Short Circuiting)을 참고하는 게 더 이해하기 좋다.
