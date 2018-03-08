@@ -1,3 +1,5 @@
+// 기초적인 기능을 갖는 함수
+
 // filter
 function filter(list, predicate) {
     var new_list = [];
