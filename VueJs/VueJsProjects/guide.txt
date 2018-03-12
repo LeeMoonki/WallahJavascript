@@ -161,3 +161,7 @@ At Index.html
     <script src="/dist/build.js"></script>
   </body>
 </html>
+
+
+프로젝트 실행 : npm dev run
+프로젝트 종료 : ctrl + c
