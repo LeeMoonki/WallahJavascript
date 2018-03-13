@@ -31,3 +31,27 @@ add(20, 30)(function(r){
 // (function(r) { console.log(r); }) 이 arguments[arguments.length++] 에 들어가고
 // func.apply(null, arguments); 에 의해
 // add(20, 30, function (r) { console.log(r); }); 처럼 실행된다.
+
+// 이렇게 함으로써 _async 함수는 콜백 패턴을 사용하는 비동기 함수를 받아
+// 한 번 더 실행하여 결과를 받는 함수로 변경해 주는 함수가 되었다.
+// 즉 다음과 같이 사용할 수 있다.
+
+var sub = _async(function(a, b, callback){
+    setTimeout(function() {
+        callback(a - b)
+    }, 1000);
+});
+
+var div = _async(function(a, b, callback){
+    setTimeout(function() {
+        callback(a / b);
+    }, 1000);
+});
+
+add(10, 15)(function(a){
+    sub(a , 5)(function(a){
+        div(a, 10)(function(r){
+            console.log(r); // 3초 후에 2가 찍힘
+        });
+    });
+});
