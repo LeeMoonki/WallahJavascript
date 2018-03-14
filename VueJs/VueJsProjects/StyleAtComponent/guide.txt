@@ -40,4 +40,9 @@ MoonKeeui-MacBook-Pro:VueJsProjects moonkeelee$ cd StyleAtComponentMoonKeeui-Mac
     2) CSS 모듈(CSS Module)
     의 두 가지 방법을 사용할 수 있다.
 
-    이 프로젝트에서는 범위 CSS를 다룬다.
+    범위 CSS를 사용할 때 주의할 사항은 다음과 같다.
+    (1) 범위 CSS는 속성 선택자(Attribute Selector)를 사용하기 때문에 브라우저에서 스타일을 적용하는 속도가 느리다.
+        그렇기 때문에 반드시 속도가 빠른 id, class, tag 선택자를 사용하는 것을 권장한다.
+    (2) 부모 컴포넌트에 적용된 범위 CSS(Scoped CSS)는 하위 컴포넌트에도 반영된다. 
+        부모 컴포넌트에서 범위 CSS를 적용하기 위해 생성되는 속성(Attribute)이 자식 컴포넌트의 루트 요소에도
+        등록되기 때문이다.
