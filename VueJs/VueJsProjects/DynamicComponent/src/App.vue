@@ -30,7 +30,7 @@
         이때 컴포넌트마다 지정된 이름이 있어야 하므로 각 컴포넌트마다 name 옵션을 부여해야한다.
       -->
       <div class="container">
-        <keep-alive include="name_about,name_home">
+        <keep-alive include="name_contact,name_home">
           <component :is="currentView"></component>
         </keep-alive>
       </div>
