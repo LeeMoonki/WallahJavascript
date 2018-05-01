@@ -128,3 +128,15 @@ function compose() {
         return result;
     }
 }
+
+// getLength
+function getLength(list) {
+    return list == null ? void 0 : list.length;
+}
+
+// isArrayLike
+var isArrayLike = function(list) {
+    var MAX_ARRAY_INDEX = Number.MAX_SAFE_INTEGER;
+    var length = getLength(list);
+    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+};
