@@ -1,6 +1,5 @@
 # Build and package folders
 ###################
-build
 dist
 packages
 typings
