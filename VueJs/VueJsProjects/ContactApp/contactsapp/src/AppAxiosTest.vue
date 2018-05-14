@@ -60,7 +60,19 @@
                 });
             },
             addContact: function () {
-
+                axios.post('/api/contacts', {
+                    name: this.name,
+                    tel: this.tel,
+                    address: this.address
+                })
+                .then((response) => {
+                    console.log(response);
+                    this.result = response.data;
+                    this.no = response.data.no;
+                })
+                .catch((ex) => {
+                    console.log("error : ", ex);
+                });
             },
             fetchContactOne: function () {
                 axios.get('/api/contacts/' + this.no)
@@ -70,13 +82,51 @@
                 });
             },
             updateContact: function () {
-
+                axios.put('/api/contacts/' + this.no, {
+                    name: this.name,
+                    tel: this.tel,
+                    address: this.address
+                })
+                .then((response) => {
+                    console.log(response);
+                    this.name = '';
+                    this.tel = '';
+                    this.address = '';
+                    this.result = response.data;
+                })
+                .catch((ex) => {
+                    console.log("error : ", ex);
+                });
             },
             deleteContact: function () {
-
+                axios.delete('/api/contacts/' + this.no)
+                .then((response) => {
+                    console.log(response);
+                    this.no = 0;
+                    this.result = response.data;
+                })
+                .catch((ex) => {
+                    console.log("error : ", ex);
+                });
             },
             changePhoto: function () {
+                // axios를 이용해서 파일 업로드 기능을 구현하기 위해
+                // <input type="file" ... >
+                // 필드를 직접 참조해야 한다.
+                // <input> 에 있는 ref 옵션을 이용해서 이 필드를 직접참조할 수 있다.
+                
+                var data = new FormData();
+                var file = this.$refs.photofile.files[0];
+                data.append('photo', file);
 
+                axios.post('/api/contacts/' + this.no + '/photo', data)
+                .then((response) => {
+                    console.log(response);
+                    this.result = response.data;
+                })
+                .catch((ex) => {
+                    console.log("updatePhoto failed ", ex);
+                });
             }
         }
     }
