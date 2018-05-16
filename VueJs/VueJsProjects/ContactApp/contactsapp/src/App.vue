@@ -26,7 +26,7 @@ import UpdateContact from './components/UpdateContact';
 import UpdatePhoto from './components/UpdatePhoto';
 
 import CONF from './Config.js';
-import EventBus from './EventBus.js';
+import eventBus from './EventBus.js';
 import Paginate from 'vuejs-paginate'
 
 export default {
