@@ -1,5 +1,5 @@
 {
-  "name": "sfc",
+  "name": "countryapp",
   "description": "A Vue.js project",
   "version": "1.0.0",
   "author": "",
@@ -10,6 +10,8 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "es6-promise": "^4.2.4",
+    "underscore": "^1.9.0",
     "vue": "^2.5.11",
     "vuex": "^3.0.1"
   },
