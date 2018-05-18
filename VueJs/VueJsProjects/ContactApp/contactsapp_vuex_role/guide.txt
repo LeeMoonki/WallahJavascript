@@ -1,0 +1,12 @@
+페이징 기능을 제공하기 위해 vuejs-paginate 라이브러리 설치
+
+npm install --save vuejs-paginate
+
+IE에서 Promise 객체를 지원하기 위해 es6-promise 라이브러리 설치
+
+npm install --save es6-promise
+
+전역 수준에서 Promise Polyfill 을 사용하기 위해 main.js 파일에 다음을 추가한다.
+
+require('es6-promise').polyfill();
+
