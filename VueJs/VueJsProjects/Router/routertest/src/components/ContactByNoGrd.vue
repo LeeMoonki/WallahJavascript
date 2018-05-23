@@ -29,8 +29,6 @@
 <script>
     import contactlist from '../ContactList.js';
 
-    // 
-
     export default {
         name: 'contactbynogrd',
         data: function() {
