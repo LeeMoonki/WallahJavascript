@@ -7,7 +7,8 @@
           <li><router-link :to="{ name: 'home' }">Home</router-link></li>
           <li><router-link :to="{ name: 'about' }">About</router-link></li>
           <li><router-link to="/contacts">Contacts</router-link></li>
-          <li><router-link to="/contactsprg">ContactsPrg</router-link></li>
+          <li><router-link to="/contactsprg">ProgrammingRoute</router-link></li>
+          <li><router-link to="/contactsgrd">NavigationGuard</router-link></li>
         </ul>
       </nav>
     </div>
@@ -22,7 +23,9 @@
   import About from './components/About.vue';
   import Contacts from './components/Contact.vue';
   import ContactsPrg from './components/ContactPrg.vue'
+  import ContactsGrd from './components/ContactGrd.vue';
   import ContactByNo from './components/ContactByNo.vue';
+  import ContactByNoGrd from './components/ContactByNoGrd.vue';
   import VueRouter from 'vue-router';
 
   const router = new VueRouter({
@@ -37,14 +40,48 @@
       { path: '/contactsprg', name: 'contactsprg', component: ContactsPrg,
       children: [
         { path: ':no', name: 'contactbyno1', component: ContactByNo }
+      ] },
+      { path: '/contactsgrd', name: 'contactsgrd', component: ContactsGrd,
+      children: [
+        { path: ':no', name: 'contactbynogrd', component: ContactByNoGrd,
+          beforeEnter: (to, from, next) => {
+            // 렌더링하는 라우트 이전에 호출되는 훅이다.
+            // 이 훅이 호출되는 시점에는 Vue 인스턴스가 만들어지지 않았기 때문에 this를 이용할 수 없다
+            console.log("@@ beforeEnter! : " + from.path + " --> " + to.path);
+            console.log("'this' at beforeEnter : ", this);
+            if (from.path.startsWith("/contactsgrd")) next();
+            else next("/home");
+          }
+        }
       ] }
     ]
+  });
+
+  router.beforeEach((to, from, next) => {
+    console.log("\n** beforeEach **");
+    next();
+  });
+
+  router.afterEach((to, from) => {
+    console.log("** afterEach **");
   });
 
   export default {
     name: 'app',
     router
   }
+
+  // Navigation Guard 순서
+  // 1. 네비게이션 시작
+  // 2. 비활성화된 컴포넌트가 있다면 Guard 기능 호출
+  // 3. 전역 수준의 beforeEach 호출
+  // 4. 재사용되는 컴포넌트의 beforeRouteUpdate 훅 호출
+  // 5. 라우트 전보 수준의 beforeEnter 호출
+  // 6. 활성화된 컴포넌트에서 beforeRouteEnter 훅 호출
+  // 7. 네비게이션 완료
+  // 8. 전역 afterEach 훅 호출
+  // 9. DOM 갱신 trigger
+  // 10. 인스턴스들의 beforeRouteEnter 훅에서 next에 전달된 콜백 호출(콜백 사용시에만)
 </script>
 
 <style>

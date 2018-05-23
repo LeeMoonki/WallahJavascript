@@ -4,7 +4,7 @@
         <h1>Contact</h1>
         <div class="wrapper">
             <div class="box" v-for="c in contacts" :key="c.no" style="background-color:#dedede;">
-                <span @click="navigate(c.no)" style="cursor:pointer;">[ {{ c.name }} ]</span>
+                <router-link v-bind:to="{ name: 'contactbynogrd', params: { no:c.no } }">( {{ c.name }} )</router-link>
             </div>
         </div>
         <!-- Contact.vue에서 자식 컴포넌트인 ContactByNo 컴포넌트를 렌더링하여 보여줌 -->
@@ -15,7 +15,7 @@
     import contactlist from '../ContactList.js'
 
     export default {
-        name: "contactprg",
+        name: "contactgrd",
         data: function () {
             return {
                 contacts: contactlist.contacts
@@ -23,20 +23,6 @@
         },
         created: function () {
             console.log(this.$route);
-        },
-        methods: {
-            navigate(no) {
-                if (confirm("상세 정보를 보시겠습니까?")) {
-                    // push(location [, completeCallback] [, abortCallback])
-                    // location : 이동하고자 하는 경로
-                    // completeCallback : 네비게이션이 완료되었을 때 호출되는 콜백 함수
-                    // abortCallback : 네비게이션이 취소되었을 때의 콜백 함수
-
-                    this.$router.push({ name: 'contactbyno1', params: { no: no }, query: { pageno:1, paegsize:no } }, function() {
-                        console.log("/contactsprg/" + no + " 로 이동 완료!");
-                    });
-                }
-            }
         }
     }
 </script>
