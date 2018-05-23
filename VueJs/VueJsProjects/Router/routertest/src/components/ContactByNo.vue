@@ -38,7 +38,7 @@
             };
         },
         created: function() {
-            console.log(this.$route);
+            console.log("At ContactByNo's this.$route : ", this.$route);
             this.no = this.$route.params.no;
         },
         computed: {
@@ -54,6 +54,7 @@
                 console.log("watch's to : ", to);
                 console.log("watch's from : ", from);
                 console.log("watch this.no : ", this.no);
+                console.log("watch's to query : ", to.query)
                 this.no = to.params.no;
             }
         }

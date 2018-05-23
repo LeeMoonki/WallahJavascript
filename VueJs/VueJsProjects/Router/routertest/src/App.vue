@@ -4,9 +4,10 @@
       <h1 class="headerText">(주)OpenSG</h1>
       <nav>
         <ul>
-          <li><router-link to="/home">Home</router-link></li>
-          <li><router-link to="/about">About</router-link></li>
+          <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+          <li><router-link :to="{ name: 'about' }">About</router-link></li>
           <li><router-link to="/contacts">Contacts</router-link></li>
+          <li><router-link to="/contactsprg">ContactsPrg</router-link></li>
         </ul>
       </nav>
     </div>
@@ -20,17 +21,22 @@
   import Home from './components/Home.vue';
   import About from './components/About.vue';
   import Contacts from './components/Contact.vue';
+  import ContactsPrg from './components/ContactPrg.vue'
   import ContactByNo from './components/ContactByNo.vue';
   import VueRouter from 'vue-router';
 
   const router = new VueRouter({
     routes: [
       { path: '/', component: Home },
-      { path: '/home', component: Home },
-      { path: '/about', component: About },
-      { path: '/contacts', component: Contacts,
+      { path: '/home', name: 'home', component: Home },
+      { path: '/about', name: 'about', component: About },
+      { path: '/contacts', name: 'contacts', component: Contacts,
       children: [
-        { path: ':no', component: ContactByNo }
+        { path: ':no', name: 'contactbyno', component: ContactByNo }
+      ] },
+      { path: '/contactsprg', name: 'contactsprg', component: ContactsPrg,
+      children: [
+        { path: ':no', name: 'contactbyno1', component: ContactByNo }
       ] }
     ]
   });
