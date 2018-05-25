@@ -1,7 +1,9 @@
 <template>
     <div>
         <p class="addnew">
-            <button class="btn btn-primary" @click="addContact()">새로운 연락처 추가하기</button>
+            <router-link class="btn btn-primary" :to="{ name: 'addcontact' }">
+                새로운 연락처 추가하기
+            </router-link>
         </p>
         <div id="example">
             <table id="list" class="table table-striped table-bordered table-hover">
@@ -35,29 +37,90 @@
                 </tbody>
             </table>
         </div>
+        <paginate ref="pagebuttons"
+        :page-count="totalpage"
+        :page-range="7"
+        :margin-pages="3"
+        :click-handler="pageChanged"
+        :prev-text="'이전'"
+        :next-text="'다음'"
+        :container-class="'pagination'"
+        :page-class="'page-item'">
+        </paginate>
+        <router-view></router-view>
     </div>
 </template>
 <script>
     import Constant from '../constant.js';
     import { mapState } from 'vuex';
+    import Paginate from 'vuejs-paginate';
+    import _ from 'underscore';
+
+    // beforeRouteUpdate(to, from, next) {
+    //     if (to.query.page && to.query.page != this.contactlist.pageno) {
+    //         var page = to.query.page;
+    //         this.$store.dispatch(Constant.FETCH_CONTACTS, { pageno:page });
+    //         this.$refs.pagebuttons.selected = page - 1;
+
+    //         next();
+    //     }
+    // },
+
+    // watch 대신 beforeRouteUpdate를 사용하게되면 
+    // contactlist route의 경우 정상동작 하지만
+    // 다른 route로 이동하려는 경우 막혀버린다. 
+    // 왜냐하면 next()에 대해 조건이 걸려있기 때문인데, 
+    // 위에 있는 next()에 대한 조건문은 contactlist를 위한 조건문이라
+    // 의도치 않게 다른 component의 route를 막아버린다
+    // 따라서 watch 대신 beforeRouteUpdate를 사용하고자 하면 조건문을 수정해야 한다
 
     export default {
         name: 'contactList',
-        computed: mapState([ 'contactlist' ]),
+        components: { Paginate },
+        computed: _.extend( 
+            {
+                totalpage: function() {
+                    var totalcount = this.contactlist.totalcount;
+                    var pagesize = this.contactlist.pagesize;
+                    return Math.floor((totalcount - 1) / pagesize) + 1;
+                }
+            }, 
+            mapState([ 'contactlist' ])
+        ),
+        mounted: function() {
+            var page = 1;
+            if (this.$route.query && this.$route.query.page) {
+                page = this.$route.query.page - 0;
+            }
+            this.$store.dispatch(Constant.FETCH_CONTACTS, { pageno: page });
+            this.$refs.pagebuttons.selected = page - 1;
+        },
+        watch: {
+            '$route': function(to, from) {
+                if (to.query.page && to.query.page != this.contactlist.pageno) {
+                    var page = to.query.page;
+                    this.$store.dispatch(Constant.FETCH_CONTACTS, { pageno:page });
+                    this.$refs.pagebuttons.selected = page - 1;
+                }
+            }
+        },
         methods: {
-            addContact: function () {
-                this.$store.dispatch(Constant.ADD_CONTACT_FORM);
+            pageChanged: function(page) {
+                this.$router.push({ name: 'contacts', query: { page: page } });
             },
             editContact: function(no) {
-                this.$store.dispatch(Constant.EDIT_CONTACT_FORM, { no: no });
+                console.log("$route : ", this.$route);
+                console.log("$router : ", this.$router);
+                //this.$router.push({ name: 'updatecontact', params: { no: no } });
             },
             deleteContact: function(no) {
                 if (confirm("정말로 삭제하시겠습니까?")) {
                     this.$store.dispatch(Constant.DELETE_CONTACT, { no: no });
+                    this.$router.push({ name: 'contacts' });
                 }
             },
             editPhoto: function(no) {
-                this.$store.dispatch(Constant.EDIT_PHOTO_FORM, { no: no });
+                this.$router.push({ name: 'updatephoto', params: { no: no } });
             }
         }
     }

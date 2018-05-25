@@ -29,15 +29,21 @@
     import { mapState } from 'vuex';
 
     export default {
-        name: "updatePhoto",
-        computed: mapState([ 'contact' ]),
+        name: "updatephoto",
+        props: [ 'no' ],
+        computed: mapState([ 'contact', 'contactlist' ]),
+        mounted: function() {
+            console.log("updatephoto mounted");
+            this.$store.dispatch(Constant.FETCH_CONTACT_ONE, { no: this.no });
+        },
         methods: {
             cancelEvent: function() {
-                this.$store.dispatch(Constant.CANCEL_FORM);
+                this.$router.push({ name: 'contacts', query: { page: this.contactlist.pageno } });
             },
             photoSubmit: function() {
                 var file = this.$refs.photofile.files[0];
                 this.$store.dispatch(Constant.UPDATE_PHOTO, { no: this.contact.no, file: file });
+                this.$router.push({ name: 'contacts', query: { page: this.contactlist.pageno } });
             }
         }
     }

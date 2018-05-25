@@ -2,57 +2,20 @@
   <div id="container">
     <div class="page-header">
       <h1 class="text-center">연락처 관리 애플리케이션</h1>
-      <p>(Dynamic Component + EventBus + Axios)</p>
+      <p>(Vue-router + Vuex + Axios)</p>
+        <div class="btn-group">
+            <router-link to="/home" class="btn btn-info menu">Home</router-link>
+            <router-link to="/about" class="btn btn-info menu">About</router-link>
+            <router-link to="/contacts" class="btn btn-info menu">Contacts</router-link>
+        </div>
     </div>
-    <component :is="currentView"></component>
-    <contactList></contactList>
-    <paginate ref="pagebuttons"
-      :page-count="totalpage"
-      :page-range="7"
-      :margin-pages="3"
-      :click-handler="pageChanged"
-      :prev-text="'이전'"
-      :next-text="'다음'"
-      :container-class="'pagination'"
-      :page-class="'page-item'"></paginate>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import ContactList from './components/ContactList';
-import ContactForm from './components/ContactForm';
-import UpdatePhoto from './components/UpdatePhoto';
-
-import CONF from './Config.js';
-import Constant from './constant.js';
-import Paginate from 'vuejs-paginate';
-import _ from 'underscore';
-
-import { mapState } from 'vuex'
-
 export default {
-  name: 'app',
-  components: { ContactList, ContactForm, UpdatePhoto, Paginate },
-  computed: _.extend({
-      totalpage: function() {
-          var totalcount = this.contactlist.totalcount;
-          var pagesize = this.contactlist.pagesize;
-          return Math.floor((totalcount - 1) / pagesize) + 1;
-      }
-  }, mapState([
-      'contactlist', 'currentView'
-  ])
-  ),
-  mounted: function() {
-      this.$store.dispatch(Constant.FETCH_CONTACTS);
-  },
-  methods: {
-      pageChanged: function(page) {
-          console.log("App > pageChanged : ", page);
-          this.$store.dispatch(Constant.FETCH_CONTACTS, { pageno: page });
-      }
-  }
+  name: 'app'
 }
 </script>
 
@@ -67,4 +30,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.menu { width:100px; }
 </style>

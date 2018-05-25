@@ -80,6 +80,9 @@
     ]
   });
 
+  // props: true
+  // 로 설정함으로써 URI 경로상의 :no 값이 해당 컴포넌트의 속성(props)로 전달된다
+
   router.beforeEach((to, from, next) => {
     console.log("\n** beforeEach **");
     next();
