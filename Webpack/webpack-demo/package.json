@@ -12,5 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.11",
+    "style-loader": "^0.21.0"
   }
 }
