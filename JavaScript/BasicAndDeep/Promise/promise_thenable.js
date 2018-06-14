@@ -37,7 +37,7 @@ console.log("original === cast : " + (original === cast)); // original === cast
 var p = Promise.resolve({
     then: function(resolve, reject) { resolve("fulfilled!"); }
 });
-console.log(p instanceof Promise);
+console.log(p instanceof Promise); // true
 
 p.then(function(value) {
     console.log(value); // fulfilled!
