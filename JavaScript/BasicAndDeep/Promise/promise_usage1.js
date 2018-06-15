@@ -22,3 +22,6 @@ beforeShortPr.then(function(data) {
 Promise.resolve(24).then(function(data) {
     console.log(data);
 });
+
+// Promise.reject() 역시 같은 방법으로 사용할 수 있다.
+// Promise.reject()는 상태가 Rejected 인 Promise 객체를 반환한다.
