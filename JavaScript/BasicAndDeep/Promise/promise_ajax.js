@@ -2,7 +2,8 @@
 
 var $ = Object.create(null);
 $.ajax = function(option) {
-    option.success(option.type + ' ' + option.url + '?title=' + option.data.title)
+    setTimeout(function() { option.success(option.type + ' ' + option.url + '?title=' + option.data.title) }
+    , 5000);
 };
 
 function ajaxreq(url, type, data) {

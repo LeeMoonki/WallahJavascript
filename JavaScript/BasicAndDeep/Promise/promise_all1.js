@@ -8,9 +8,7 @@ function delay(time) {
 
 var $ = Object.create(null);
 $.ajax = function(option) {
-    option.success(option.type + ' ' + option.url + '?title=' + option.data.title)
-    //setTimeout(option.success(option.type + ' ' + option.url + '?title=' + option.data.title), 5000); --> 이 방법은 ajax를 delay 시키지 못함을 발견
-    // 즉 resolve가 실행되면 setTimeout에도 불고하고 resolve 한다
+    option.success(option.type + ' ' + option.url + '?title=' + option.data.title);
 };
 
 function ajaxreq(url, type, data) {
