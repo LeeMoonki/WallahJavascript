@@ -21,7 +21,7 @@ var something = (function() {
 
     return {
         // "for ... of" 루프에서 필요하다
-        // [] 구문은 계산된 프로퍼티명(Computed Property Name)이라 하며 객체 리터럴 정의를 표현식으로 평가하여 그 결과를 프로퍼티명으로 삼는다
+        // 이렇게 해줌으로써 something 값을 이터러블로 만든다. 이제 something은 iterable 이면서 동시에 iterator 이다.
         [Symbol.iterator]: function() { return this; },
         // 표준 이터레이터 인터페이스 메서드
         next: function() {
@@ -64,3 +64,19 @@ for (
 
 var arr = [ 1, 3, 5, 7, 11 ];
 for (var v of arr) { console.log(v); } // 1 3 5 7 11
+
+// # iterator 그리고 iterable
+
+// 위에서 somethig 처럼 next() 메서드로 인터페이스하는 객체를 이터레이터(iterator)라고 한다.
+// 그러나 순회 가능한 이터레이터를 포괄한 객체, '이터러블(iterable)'이 더 밀접한 용어이다.
+
+// ES6부터 이터러블은 특별한 ES6 심볼값 Symbol.iterator 라는 이름을 가진 함수를 지니고 있어야 
+// 함수를 호출하여 이터러블에서 이터레이터를 가져올 수 있다.
+
+// 위에 있는 arr 배열이 이터러블이다. for ... of 루프는 자동으로 Symbol.iterator 함수를 호출하여 이터레이터를 생성한다.
+// 물론 수동으로 함수를 호출하여 이 함수가 반환한 이터레이터를 사용할 수도 있다.
+
+var arr1 = [ 1, 3, 5, 7, 11 ];
+
+var it = arr1[Symbol.iterator]();
+console.log(it.next().value, it.next().value, it.next().value, it.next().value, it.next().value); // 1 3 5 7 11
