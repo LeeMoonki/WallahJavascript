@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <div>
+            <input  id="ipt" type="text" placeholder="type a value" style="width:300px;font-size:11pt;" />
+            <div id="redbox" style="width:100px;height:70px;background-color:#0f0;"></div>
+        </div>
+
+        <script type="text/javascript">
+
+            document.getElementById('ipt').addEventListener('keyup', function(event) {
+                var t = event.target;
+                console.log(t.value);
+
+                makeAndTriggerEvent(event);
+            });
+            document.getElementById('redbox').addEventListener('overlength', function(event) {
+                console.log('event : ', event);
+                console.log('event.detail : ', event.detail);
+            });
+
+            function makeAndTriggerEvent(e) {
+                var customEvent = new CustomEvent('overlength', {
+                    detail: {
+                        event: e,
+                        value: 100
+                    }
+                });
+
+                document.getElementById('redbox').dispatchEvent(customEvent);
+            }
+        </script>
+    </body>
+</html>
