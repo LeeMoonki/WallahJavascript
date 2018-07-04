@@ -7,27 +7,38 @@
     <body>
         <div>
             <input  id="ipt" type="text" placeholder="type a value" style="width:300px;font-size:11pt;" />
-            <div id="redbox" style="width:100px;height:70px;background-color:#0f0;"></div>
+            <div id="redbox" style="margin-top:20px;width:100px;height:70px;background-color:#0f0;"></div>
         </div>
 
         <script type="text/javascript">
 
+            // built-in event
             document.getElementById('ipt').addEventListener('keyup', function(event) {
                 var t = event.target;
-                console.log(t.value);
+                console.log('input value : ', t.value);
 
-                makeAndTriggerEvent(event);
+                makeAndTriggerEvent(event, t.value); // make event and trigger it
             });
+
+            // custom event
             document.getElementById('redbox').addEventListener('overlength', function(event) {
                 console.log('event : ', event);
                 console.log('event.detail : ', event.detail);
+                if (event.detail.value.length > 5) {
+                    console.log('warning');
+                    event.target.style.backgroundColor = '#f00';
+                } else {
+                    console.log('safe');
+                    event.target.style.backgroundColor = '#0f0';
+                }
             });
 
-            function makeAndTriggerEvent(e) {
+            // function to make event and trigger it
+            function makeAndTriggerEvent(e, val) {
                 var customEvent = new CustomEvent('overlength', {
                     detail: {
                         event: e,
-                        value: 100
+                        value: val
                     }
                 });
 
