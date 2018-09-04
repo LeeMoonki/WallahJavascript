@@ -1,0 +1,46 @@
+<!--
+    
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        
+        <style>
+            body { margin:0; }
+            #wrapper { display:inline-block;border:1px solid #f00; }
+            #box { padding:10px;margin:5px;width:100px;height:70px;background-color:#429ac2; }
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="box"></div>
+        </div>
+        
+        <script type="text/javascript">
+            var box = document.getElementById('box');
+
+            console.log("box's style setting : ", "padding:10px;margin:5px;width:100px;height:70px;");
+            console.log("box's style (CSSStyleDeclaration) : ", getComputedStyle(box));
+            console.log("box's outerHeight : ", outerHeight(box));
+            console.log("box's outerWidth : ", outerWidth(box));
+            console.log("box's height : ", parseFloat(getComputedStyle(box).height));
+            console.log("box's width : ", parseFloat(getComputedStyle(box).width));
+
+            function outerHeight(element) {
+                var height = element.offsetHeight;
+                var style = getComputedStyle(element);
+
+                return height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+            }
+
+            function outerWidth(element) {
+                var width = element.offsetWidth;
+                var style = getComputedStyle(element);
+
+                return width + parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+            }
+        </script>
+    </body>
+</html>

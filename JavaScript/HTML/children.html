@@ -1,0 +1,65 @@
+<!--
+    
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        
+    </head>
+    <body>
+        <div id="app">
+            <ul class="app__ul1 additionalClass1 additionalClass2">
+                <li>1. a</li>
+                <li>2. b</li>
+            </ul>
+            <ul class="app__ul2 additionalClass1">
+                <li>1. A</li>
+                <li>2. B</li>
+                <li>3. C</li>
+            </ul>
+            <div class="divTag"></div>
+            <span class="spanTag"></span>
+        </div>
+        <script type="text/javascript">
+            var app_ul = document.getElementById('app').querySelectorAll('ul');
+            var app_li = document.getElementById('app').querySelectorAll('li');
+
+            console.log('#app ul : ', app_ul);
+            console.log('#app li : ', app_li);
+            
+            console.log("document.getElementById('app').childElementCount : ", document.getElementById('app').childElementCount);
+            console.log("document.getElementById('app').childNodes : ", document.getElementById('app').childNodes);
+            console.log("document.getElementById('app').children : ", document.getElementById('app').children);
+            console.log("document.getElementById('app').firstChild : ", document.getElementById('app').firstChild);
+            console.log("document.getElementById('app').firstElementChild : ", document.getElementById('app').firstElementChild);
+
+            console.log();
+            console.log('access to an child : ', app_li[1]);
+            console.log('access to an child with class : ', getChildrenWithClass(document.getElementById('app'), 'app__ul1'));
+            console.log('access to an child with class : ', getChildrenWithTag(document.getElementById('app'), 'span'));
+            
+            function getChildrenWithClass(element, className) {
+                var children = element.children;
+                var childrenList = [];
+                var tempClasses;
+                for (var i = 0, len = children.length; i < len; i++) {
+                    tempClasses = children[i].className.split(' ');
+                    if (tempClasses.includes(className)) childrenList.push(children[i]);
+                }
+                return childrenList;
+            }
+
+            function getChildrenWithTag(element, tagName) {
+                var children = element.children;
+                var childrenList = [];
+                var regexp = new RegExp("^" + tagName + "$", "i");
+                for (var i = 0, len = children.length; i < len; i++) {
+                    if (regexp.test(children[i].tagName)) childrenList.push(children[i]);
+                }
+                return childrenList;
+            }
+        </script>
+    </body>
+</html>
