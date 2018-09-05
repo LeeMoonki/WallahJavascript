@@ -1,5 +1,6 @@
 // onlyForNumber 클래스를 적용한 input은 숫자만 입력가능하다.
 // jQuery를 이용해 element 선택
+// https://stackoverflow.com/questions/33251052/allow-only-numbers-and-ctrla-ctrlv-ctrlc-to-a-textbox
 
 $("input.onlyForNumber").keydown(function (e) {
     // Allow: backspace, delete, tab, escape, enter and . (dot . is 190)
