@@ -9,7 +9,14 @@
         
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <div id="ul__list">
+                <ul>
+                    <li>1. a</li>
+                    <li>2. b</li>
+                </ul>
+            </div>
+        </div>
 
         <script type="text/javascript" src="./nonn.js"></script>
         <script type="text/javascript">
@@ -24,13 +31,20 @@
 
             var style = getComputedStyle(box);
 
-            console.log(style);
-            console.log(style.marginTop);
-            console.log(style['marginTop']);
-            console.log(parseFloat(style.marginTop));
-            console.log(box.offsetHeight);    
+            // console.log(style);
+            // console.log(style.marginTop);
+            // console.log(style['marginTop']);
+            // console.log(parseFloat(style.marginTop));
+            // console.log(box.offsetHeight);    
 
-            app.appendChild(box);
+            // app.appendChild(box);
+
+
+            try {
+                getComputedStyle('')
+            } catch(e) {
+                console.log('boom');
+            }
         </script>
     </body>
 </html>
