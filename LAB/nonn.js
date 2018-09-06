@@ -10,7 +10,7 @@
         if (typeof module !== 'undefined' && module.exports) {
             exports = module.exports = new nonn();
         }
-        exports.nonn = nonn;
+        exports.nonn = new nonn();
     } else {
         self.nonn = new nonn();
     }
