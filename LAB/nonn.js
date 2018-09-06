@@ -63,13 +63,17 @@
         return [ element ];
     }
 
-    nonn.prototype.getChildrenWithClass = function(className, element) {
-        if (element !== undefined && !(element instanceof Element)) { 
+    // find children has certain class
+    // className : class name
+    // parentElement : the parent element. If do not assign it, the this._elements will be the parent.
+    // return : nonn object which has children
+    nonn.prototype.getChildrenWithClass = function(className, parentElement) {
+        if (parentElement !== undefined && !(parentElement instanceof Element)) { 
             makeError(101, arguments);
             return [];
         }
 
-        var elements = checkAndReturnElements(this, element);
+        var elements = checkAndReturnElements(this, parentElement);
 
         var children,
             childrenList = [],
@@ -87,13 +91,17 @@
         return new nonn(childrenList);
     };
 
-    nonn.prototype.getChildrenWithTag = function(tagName, element) {
-        if (element !== undefined && !(element instanceof Element)) { 
+    // find children has certain tag
+    // tagName : tag name
+    // parentElement : the parent element. If do not assign it, the this._elements will be the parent.
+    // return : nonn object which has children
+    nonn.prototype.getChildrenWithTag = function(tagName, parentElement) {
+        if (parentElement !== undefined && !(parentElement instanceof Element)) { 
             makeError(101, arguments);
             return [];
         }
 
-        var elements = checkAndReturnElements(this, element);
+        var elements = checkAndReturnElements(this, parentElement);
         console.log(elements);
 
         var children, 
