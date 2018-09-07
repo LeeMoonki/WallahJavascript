@@ -31,6 +31,8 @@
         console.error(errors['code' + code].msg, additionalErrorMsg);
     }
 
+    // functions for nonn
+
     // getLength
     function getLength(list) {
         return list == null ? void 0 : list.length;
@@ -45,7 +47,7 @@
     // map
     function map(data, iteratee) {
         var new_list = [];
-        if (_.isArrayLike(data)) {
+        if (isArrayLike(data)) {
             for (var i = 0, len = data.length; i < len; i++) {
                 new_list.push(iteratee(data[i], i, data));
             }
@@ -58,10 +60,45 @@
         return new_list;
     };
 
-    function checkAndReturnElements(context, element) {
+    function checkAndReturnElements(context, element, oneToOne) {
         if (!element || !(element instanceof Element)) return context._elements;
-        return [ element ];
+        return oneToOne ? element : [ element ];
     }
+
+    function getOuterHeight(element) {
+        var style = getComputedStyle(element);
+        if (!style.margin) { throw 'The element is not an element or not rendered.'; }
+        return element.offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+    }
+
+    function getOuterWidth(element) {
+        var style = getComputedStyle(element);
+        if (!style.margin) { throw 'The element is not an element or not rendered.'; }
+        return element.offsetWidth + parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+    }
+    // //// functions for nonn
+
+    // get nonn object's elements
+    nonn.prototype.getAll = function() {
+        return this._elements;
+    };
+
+    // get a nonn object's element
+    // index : the index of  nonn object's elements
+    nonn.prototype.getAt = function(index) {
+        if (index >= this._elements.length || index < 0) { return undefined; }
+        return this._elements[index];
+    };
+
+    //
+    nonn.prototype.find = function(query) {
+        if (!query) return new nonn();
+
+        // if nonn object has no elements
+        if (this._elements.length === 0) return new nonn(document.querySelectorAll(query));
+        
+        
+    };
 
     // find children has certain class
     // className : class name
@@ -102,7 +139,6 @@
         }
 
         var elements = checkAndReturnElements(this, parentElement);
-        console.log(elements);
 
         var children, 
             childrenList = [], 
@@ -119,20 +155,69 @@
         return new nonn(childrenList);
     };
     
-
-    nonn.prototype.outerHeight = function(element) {
-        var height = element.offsetHeight;
-        var style = getComputedStyle(element);
-        if (!style.marginTop) return 0;
-
-        return height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+    // get height of element(s)
+    // element : HTML element
+    // return : If pass the element, the height of it. If not, the height of caller's _elements.
+    nonn.prototype.height = function(element) {
+        var elements = checkAndReturnElements(this, element);
+        if (elements.length === 1) {
+            // an element
+            return parseFloat(getComputedStyle(elements[0]).height);
+        } 
+        if (elements.length > 1) {
+            return map(elements, function(ele, index) {
+                return parseFloat(getComputedStyle(ele).height);
+            });
+        }
+        return undefined;
     };
 
-    nonn.prototype.outerWidth = function(element) {
-        var width = element.offsetWidth;
-        var style = getComputedStyle(element);
-        if (!style.marginLeft) return 0;
+    // get width of element(s)
+    // element : HTML element
+    // return : If pass the element, the width of it. If not, the width of caller's _elements.
+    nonn.prototype.width = function(element) {
+        var elements = checkAndReturnElements(this, element);
+        if (elements.length === 1) {
+            // an element
+            return parseFloat(getComputedStyle(elements[0]).width);
+        } 
+        if (elements.length > 1) {
+            return map(elements, function(ele, index) {
+                return parseFloat(getComputedStyle(ele).width);
+            });
+        }
+        return undefined;
+    }
 
-        return width + parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+    // get outerHeight of element(s)
+    // element : HTML element
+    // return : If pass the element, the outerHeight of it. If not, the outerHeight of caller's _elements.
+    nonn.prototype.outerHeight = function(element) {
+        var elements = checkAndReturnElements(this, element);
+        if (elements.length === 1) {
+            return getOuterHeight(elements[0]);
+        }
+        if (elements.length > 1) {
+            return map(elements, function(ele, index) {
+                return getOuterHeight(ele);
+            });
+        }
+        return undefined;
+    };
+
+    // get outerWidth of element(s)
+    // element : HTML element
+    // return : If pass the element, the outerWidth of it. If not, the outerWidth of caller's _elements.
+    nonn.prototype.outerWidth = function(element) {
+        var elements = checkAndReturnElements(this, element);
+        if (elements.length === 1) {
+            return getOuterWidth(elements[0]);
+        }
+        if (elements.length > 1) {
+            return map(elements, function(ele, index) {
+                return getOuterWidth(ele);
+            });
+        }
+        return undefined;
     };
 }.call(this));

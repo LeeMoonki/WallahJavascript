@@ -52,7 +52,8 @@ describe('nonn module spec', () => {
             }
         });
         UTS.createElement('div', {
-            id: 'test-div1'
+            id: 'test-div1',
+            parentEle: document.getElementById('test-div')
         });
         UTS.createElement('div', {
             id: 'test-div2',
@@ -61,13 +62,16 @@ describe('nonn module spec', () => {
                 height: '70px',
                 margin: '5px',
                 padding: '10px'
-            }
+            },
+            parentEle: document.getElementById('test-div')
         });
 
         // assert
+        expect(nonn.outerHeight()).toBeUndefined();
         expect(nonn.outerHeight(document.getElementById('test-div'))).toBe(80);
         expect(nonn.outerHeight(document.getElementById('test-div1'))).toBe(0);
         expect(nonn.outerHeight(document.getElementById('test-div2'))).toBe(100);
+        expect(nonn.getChildrenWithTag('div', document.getElementById('test-div')).outerHeight()).toEqual([0, 100]);
     });
 
     it('outerWidth', () => {
@@ -81,7 +85,8 @@ describe('nonn module spec', () => {
             }
         });
         UTS.createElement('div', {
-            id: 'test-div1'
+            id: 'test-div1',
+            parentEle: document.getElementById('test-div')
         });
         UTS.createElement('div', {
             id: 'test-div2',
@@ -90,13 +95,55 @@ describe('nonn module spec', () => {
                 height: '70px',
                 margin: '5px',
                 padding: '10px'
-            }
+            },
+            parentEle: document.getElementById('test-div')
         });
 
+        // assert
+        expect(nonn.outerWidth()).toBeUndefined();
+        expect(nonn.outerWidth(document.getElementById('test-div'))).toBe(110);
+        expect(nonn.outerWidth(document.getElementById('test-div1'))).toBe(100);
+        expect(nonn.outerWidth(document.getElementById('test-div2'))).toBe(130);
+        expect(nonn.getChildrenWithTag('div', document.getElementById('test-div')).outerWidth()).toEqual([100, 130]);
+    });
+
+    it('height', () => {
+        // arrange
+        UTS.createElement('div', {
+            id: 'test-div'
+        });
+        UTS.createElement('div', {
+            id: 'test-div1',
+            style: {
+                width: '100px',
+                height: '70px',
+                margin: '5px'                
+            },
+            parentEle: document.getElementById('test-div')
+        });
+        UTS.createElement('div', {
+            id: 'test-div2',
+            style: {
+                width: '100px',
+                height: '70px',
+                padding: '5px'                
+            },
+            parentEle: document.getElementById('test-div1')
+        });
+        UTS.createElement('div', {
+            id: 'test-div2',
+            style: {
+                width: '100px',
+                height: '70px',
+                margin: '5px'                
+            },
+            parentEle: document.getElementById('test-div1')
+        });
 
         // assert
-        expect(nonn.outerWidth(document.getElementById('test-div'))).toBe(110);
-        expect(nonn.outerWidth(document.getElementById('test-div1'))).toBe(0);
-        expect(nonn.outerWidth(document.getElementById('test-div2'))).toBe(130);
+        expect(nonn.height()).toBeUndefined();
+        expect(nonn.height(document.getElementById('test-div1'))).toBe(70);
+        expect(nonn.getChildrenWithTag('div', document.getElementById('test-div')).height()).toBe(70);
+        expect(nonn.getChildrenWithTag('div', document.getElementById('test-div1')).height()).toEqual([70,70]);
     });
 });
