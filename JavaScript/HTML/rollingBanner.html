@@ -1,0 +1,124 @@
+<!--
+    
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        
+        <style>
+            body { padding:0;margin:0; }
+            .container { position:relative;overflow:hidden;width:188px;height:268px;border:1px solid #000; }
+            .container > div { position:absolute;width:188px;height:268px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div>
+                <img src="../../Sources/images/banners/antmanAndwasp.jpg">
+            </div>
+            <div>
+                <img src="../../Sources//images/banners/arrival.jpg">
+            </div>
+            <div>
+                <img src="../../Sources//images/banners/blackpanther.jpg">
+            </div>
+            <div>
+                <img src="../../Sources//images/banners/bladerunner2049ff.jpg">
+            </div>
+        </div>
+
+        <script type="text/javascript">
+
+            window.onload = function() {
+
+                rollingBanner(
+                    document.getElementsByClassName('container')[0],
+                    {
+                        timer: 5,
+                        speed: 1,
+                        pauseTime: 5000,
+                        startAt: 1
+                    }
+                );
+            }
+
+            // rolling banner function
+            // bannerContainer : banner container DOM
+            // options.timer, options.speed : move banner 'speed'px for every 'timer' milliseconds. 
+            //                                default is timer: 5, speed: 1
+            // options.pauseTime : after moving, stop for 'pauseTime'. default is pauseTime: 2000.
+            // options.startAt : the start index of children. default : 0
+            function rollingBanner(bannerContainer, options) {
+                var container = bannerContainer,
+                    banners = container.getElementsByTagName('div'),
+                    bannersLen = banners.length;
+                var startAt = options.startAt ? options.startAt : 0;
+
+                // if banners length is less than 2, do not need to rotate
+                if (bannersLen < 2) return;
+
+                var width = parseFloat(getComputedStyle(bannerContainer).width),
+                    height = parseFloat(getComputedStyle(bannerContainer).height);
+
+                for (var i = 0; i < bannersLen; ++i) {
+                    banners[i].style.left = `${width}px`;
+                }
+                banners[startAt].style.left = '0px';
+
+                var count = 0;
+                startMove({ 
+                    timer: options.timer ? options.timer : 5, 
+                    speed: options.speed ? options.speed : 1, 
+                    pauseTime: options.pauseTime ? options.pauseTime : 2000,
+                    banners: banners,
+                    current: startAt % bannersLen, 
+                    next: (startAt + 1) % bannersLen, 
+                    width: width, 
+                    height: height 
+                });
+                
+                // moving function
+                function startMove(infos) {
+                    // for finite rolling
+                    count++; 
+                    if (count === 10) return;
+                    console.log('count : ', count);
+                    // // for finite rolling
+
+                    var x1 = 0, x2 = infos.width;
+
+                    banners[infos.current].style.left = `${x1}px`;
+                    banners[infos.next].style.left = `${x2}px`;
+
+                    // rolling
+                    var moving = setInterval(function() {
+                        if (x2 === 0) {
+                            // if finish moving
+                            clearInterval(moving);
+                            setTimeout(function() {
+                                startMove({
+                                    timer: infos.timer,
+                                    speed: infos.speed,
+                                    pauseTime: infos.pauseTime,
+                                    banners: banners,
+                                    current: (infos.current + 1) % banners.length,
+                                    next: (infos.next + 1) % banners.length,
+                                    width: infos.width,
+                                    height: infos.height
+                                })
+                            }, infos.pauseTime);
+                        } else {
+                            // if do not finish moving
+                            x1 = x1 - infos.speed;
+                            x2 = x2 - infos.speed;
+                            banners[infos.current].style.left = `${x1}px`;
+                            banners[infos.next].style.left = `${x2}px`;
+                        }
+                    }, infos.timer);
+                }
+            }
+        </script>
+    </body>
+</html>
