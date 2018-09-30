@@ -76,6 +76,15 @@
         if (!style.margin) { throw 'The element is not an element or not rendered.'; }
         return element.offsetWidth + parseFloat(style.marginLeft) + parseFloat(style.marginRight);
     }
+
+    function getArrayFromNodeList(elements) {
+        if (!elements.length) return [];
+        var result = [];
+        for (var i = 0, len = elements.length; i < len; i++) {
+            result.push(elements[i]);
+        }
+        return result;
+    }
     // //// functions for nonn
 
     // get nonn object's elements
@@ -90,14 +99,20 @@
         return this._elements[index];
     };
 
-    //
+    // find elements with selector query
+    // query : selector query
     nonn.prototype.find = function(query) {
+        var elements = this._elements, len = elements.length, result = [];
         if (!query) return new nonn();
-
+        
         // if nonn object has no elements
-        if (this._elements.length === 0) return new nonn(document.querySelectorAll(query));
-        
-        
+        if (this._elements.length === 0) return new nonn(getArrayFromNodeList(document.querySelectorAll(query)));
+        else {
+            for (var i = 0; i < len; i++) {
+                result = result.concat(getArrayFromNodeList(elements[i].querySelectorAll(query)));
+            }
+        }
+        return new nonn(result);
     };
 
     // find children has certain class
@@ -220,4 +235,22 @@
         }
         return undefined;
     };
+
+    // hide element from the view
+    // element : An element to hide. Default value is its _elements
+    nonn.prototype.hide = function(element) {
+        var elements = checkAndReturnElements(this, element);
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.display = 'none';
+        }
+    };
+
+    // show element from the view
+    // element : An element to show. Default value is its _elements
+    nonn.prototype.show = function(element) {
+        var elements = checkAndReturnElements(this, element);
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.display = '';
+        }
+    }
 }.call(this));

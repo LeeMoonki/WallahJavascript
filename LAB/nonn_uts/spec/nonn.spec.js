@@ -146,4 +146,28 @@ describe('nonn module spec', () => {
         expect(nonn.getChildrenWithTag('div', document.getElementById('test-div')).height()).toBe(70);
         expect(nonn.getChildrenWithTag('div', document.getElementById('test-div1')).height()).toEqual([70,70]);
     });
+
+    it('find', () => {
+        // arrange
+        UTS.createElement('div', {
+            id: 'test-div1'
+        });
+        UTS.createElement('div', {
+            id: 'test-div2'
+        });
+        UTS.createElement('div', {
+            class: 'div1 div12',
+            parentEle: document.getElementById('test-div1')
+        });
+        UTS.createElement('div', {
+            class: 'div1 div22',
+            parentEle: document.getElementById('test-div2')
+        });
+
+        // assert
+        expect(nonn.find().getAll().length).toBe(0);
+        expect(nonn.find('#test-div1').getAll().length).toBe(1);
+        expect(nonn.find('#test-div1').find('.div1').getAll().length).toBe(1);
+        expect(nonn.find('.div1').getAll().length).toBe(2);
+    });
 });
