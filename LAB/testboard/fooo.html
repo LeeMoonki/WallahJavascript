@@ -1,0 +1,52 @@
+<!--
+    
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+            function foo() {
+                var instance = this;
+                if (!(this instanceof foo)) {
+                    instance = new foo();   
+                }
+                foo = instance;
+
+                this.classes = [];
+            }
+            
+            foo.prototype.setClass = function(classes) {
+                var arr = undefined;
+                if (typeof classes === 'string') {
+                    arr = classes.trim().split(/\s+/);
+                    this.classes = this.classes.concat(arr);
+                } else if (classes instanceof Array) {
+                    arr = [];
+                    for (var i = 0, len = classes.length; i < len; ++i) {
+                        if (typeof classes[i] === 'string') arr.push(classes[i]);
+                    }
+                    this.classes = this.classes.concat(arr);
+                } else {
+                    console.error('The argument of setClass must be a string or an array consists of classe names.');
+                }
+            };
+            var bar = new foo();
+            foo.setClass('a b c');
+            foo.setClass(['1', '2', 3, 'foo'])
+            console.log(bar.classes);
+
+            function showArguments() {
+                console.log('arguments : ', arguments);
+                console.log(Array.prototype.slice.call(arguments));
+            }
+
+            showArguments(1,2,3,'a');
+        </script>
+    </body>
+</html>
