@@ -67,13 +67,13 @@
 
     function getOuterHeight(element) {
         var style = getComputedStyle(element);
-        if (!style.margin) { throw 'The element is not an element or not rendered.'; }
+        if (!style.marginTop) { throw 'The element is not an element or not rendered.'; }
         return element.offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
     }
 
     function getOuterWidth(element) {
         var style = getComputedStyle(element);
-        if (!style.margin) { throw 'The element is not an element or not rendered.'; }
+        if (!style.marginTop) { throw 'The element is not an element or not rendered.'; }
         return element.offsetWidth + parseFloat(style.marginLeft) + parseFloat(style.marginRight);
     }
 
@@ -122,7 +122,7 @@
     nonn.prototype.getChildrenWithClass = function(className, parentElement) {
         if (parentElement !== undefined && !(parentElement instanceof Element)) { 
             makeError(101, arguments);
-            return [];
+            return new nonn();
         }
 
         var elements = checkAndReturnElements(this, parentElement);
@@ -150,7 +150,7 @@
     nonn.prototype.getChildrenWithTag = function(tagName, parentElement) {
         if (parentElement !== undefined && !(parentElement instanceof Element)) { 
             makeError(101, arguments);
-            return [];
+            return new nonn();
         }
 
         var elements = checkAndReturnElements(this, parentElement);
