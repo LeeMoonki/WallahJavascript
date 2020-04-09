@@ -22,7 +22,7 @@ let mapLargeArr = function(largeArr, mapper, chunkSize = 1000) {
     
   };
 
-  return mapLargeArr(largeArr);
+  return mapLargeArr([...largeArr]);
 }
 
 // example
