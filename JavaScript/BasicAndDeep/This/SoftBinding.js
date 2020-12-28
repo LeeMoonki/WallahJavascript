@@ -1,8 +1,8 @@
 // browser에서 사용
 
 if (!Function.prototype.softBind) {
-    Function.prototype.softBind = function(obj) {
-        var fn = this;
+    Function.prototype.softBind = function(obj) { // obj : 바인딩 타겟
+        var fn = this; // 원본 함수
         var curried = [].slice.call(arguments, 1); // 커링된 인자는 죄다 포착한다.
         var bound = function() {
             // 호출 시점에 this를 체크하여 전역 객체나 undefined일 경우 미리 준비한 기본 객체(obj)로 세팅.
@@ -13,7 +13,7 @@ if (!Function.prototype.softBind) {
                 curried.concat.apply(curried, arguments)
             );
         };
-        bound.prototype = Object.create(fn.prototype);
+        bound.prototype = Object.create(fn.prototype); // 원본 함수의 프로토타입 체인을 연결
         return bound;
     };
 }

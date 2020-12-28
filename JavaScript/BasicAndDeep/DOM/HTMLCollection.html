@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style>
+      .red { background-color: #f00; }
+      .blue { background-color: #00f; }
+    </style>
+  </head>
+  <body>
+    <ul id="fruits">
+      <li class="red">Apple</li>
+      <li class="red">Banana</li>
+      <li class="red">Orange</li>
+    </ul>
+    <script type="text/javascript">
+      const $els = document.getElementsByClassName('red');
+
+      // HTMLCollection은 살아있는 객체이므로 첫 번째 요소의 class 속성을 blue로 변경한 순간 $els의 length는 2가 되고
+      // 그 다음 요소, 즉 인덱스가 1인 요소를 찾으면 세 번째 요소에 접근하게 된다. 그리고 세 번째 요소의 class를 변경한다.
+      // 그리고 인덱스가 2가 되고 $els의 length는 1이므로 접근 가능한 요소가 없어서 색이 변경되지 않는다.
+      // for (const $el of $els) {
+      //   $el.className = 'blue';
+      // }
+
+      // 이를 해결하기위해 다음과 같은 방법들이 있다.
+
+      // 1. 인덱스 역순
+      // for (let i = $els.length - 1; i >= 0; i--) {
+      //   $els[i].className = 'blue';
+      // }
+
+      // 2. while문 사용
+      // while ($els.length > 0) {
+      //   $els[0].className = 'blue';
+      // }
+
+      // 3. HTMLCollection을 배열로 변환하여 순회
+      [...$els].forEach($el => $el.className = 'blue');
+    </script>
+  </body>
+</html>

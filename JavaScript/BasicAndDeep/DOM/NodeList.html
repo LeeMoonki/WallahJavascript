@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style>
+      .red { background-color: #f00; }
+      .blue { background-color: #00f; }
+    </style>
+  </head>
+  <body>
+    <ul id="fruits">
+      <li class="red">Apple</li>
+      <li class="red">Banana</li>
+      <li class="red">Orange</li>
+    </ul>
+    <script type="text/javascript">
+      // HTMLCollection의 부작용을 피하기위해 NodeList를 반환하는 querySelectorAll 메서드를 사용
+      // NodeList는 실시간으로 노드 객체의 상태 변경을 반영하지 않는 객체다.
+      const $els = document.querySelectorAll('.red');
+
+      $els.forEach($el => $el.className = 'blue');
+    </script>
+  </body>
+</html>
