@@ -4,7 +4,7 @@
   "description": "This repository has codes for studying Vue.js and Javascript etc. Some codes or most are not my code. The origins I referenced are below.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,14 @@
     "url": "https://github.com/LeeMoonki/WallahJavascript/issues"
   },
   "homepage": "https://github.com/LeeMoonki/WallahJavascript#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-modules": "^0.1.4",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "rollup": "^2.36.1"
+  }
 }
