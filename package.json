@@ -4,7 +4,8 @@
   "description": "This repository has codes for studying Vue.js and Javascript etc. Some codes or most are not my code. The origins I referenced are below.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "test:pt": "jest --watch --testPathPattern=JavaScript/PatternAndTest"
   },
   "repository": {
     "type": "git",
